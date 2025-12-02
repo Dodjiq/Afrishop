@@ -40,8 +40,9 @@ function App() {
             <Route path="help" element={<DashboardHome />} />
           </Route>
           
-          {/* Builder Route */}
+          {/* Builder Routes */}
           <Route path="/dashboard/builder" element={<BuilderPage />} />
+          <Route path="/dashboard/new-builder" element={<NewBuilderPage />} />
           
           {/* Store Preview Route */}
           <Route path="/preview/:storeSlug" element={<StorePreviewPage />} />
