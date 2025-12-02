@@ -245,7 +245,7 @@ const SignUpPage = () => {
 
             <p className="text-xs text-gray-500 text-center">
               En créant un compte, vous acceptez nos{' '}
-              <a href="#" className="text-orange-400 hover:underline">Conditions d'utilisation</a>
+              <a href="#" className="text-orange-400 hover:underline">Conditions d&apos;utilisation</a>
               {' '}et notre{' '}
               <a href="#" className="text-orange-400 hover:underline">Politique de confidentialité</a>
             </p>
