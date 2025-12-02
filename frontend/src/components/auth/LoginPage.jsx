@@ -123,7 +123,7 @@ const LoginPage = () => {
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+                  placeholder="••••••••"
                   className="pl-10 pr-10 bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-orange-500 py-6"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
