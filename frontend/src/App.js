@@ -16,6 +16,7 @@ import NewBuilderPage from "@/components/builder/NewBuilderPage";
 import StorePreviewPage from "@/components/store/StorePreviewPage";
 import ShrineDemo from "@/pages/ShrineDemo";
 import ShrineFullDemo from "@/pages/ShrineFullDemo";
+import UltimateDemo from "@/pages/UltimateDemo";
 
 function App() {
   return (
