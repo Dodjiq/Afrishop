@@ -12,6 +12,7 @@ import DashboardHome from "@/components/dashboard/DashboardHome";
 import StoresPage from "@/components/dashboard/StoresPage";
 import NewStorePage from "@/components/dashboard/NewStorePage";
 import BuilderPage from "@/components/builder/BuilderPage";
+import StorePreviewPage from "@/components/store/StorePreviewPage";
 
 function App() {
   return (
@@ -38,6 +39,9 @@ function App() {
           
           {/* Builder Route */}
           <Route path="/dashboard/builder" element={<BuilderPage />} />
+          
+          {/* Store Preview Route */}
+          <Route path="/preview/:storeSlug" element={<StorePreviewPage />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-right" richColors />
