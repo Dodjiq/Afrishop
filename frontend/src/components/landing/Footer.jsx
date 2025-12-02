@@ -173,7 +173,7 @@ const Footer = () => {
         {/* Affiliate Banner */}
         <div className="mt-8 p-4 rounded-xl bg-gradient-to-r from-orange-500/10 to-amber-500/10 border border-orange-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="text-2xl">\uD83E\uDD11</div>
+            <div className="text-2xl">🤑</div>
             <div>
               <h4 className="text-white font-semibold">Programme d'affiliation EasyShop</h4>
               <p className="text-gray-400 text-sm">Gagnez des revenus à vie pour chaque client référé !</p>
