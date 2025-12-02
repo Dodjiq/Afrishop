@@ -60,11 +60,25 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography - Sora for headings and buttons */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Sora', sans-serif;
+}
+
+button, .btn, [class*="Button"] {
+  font-family: 'Sora', sans-serif;
+}
+
+/* Paragraphs - Lato */
+p, span, li, a, label, input, textarea, select {
+  font-family: 'Lato', sans-serif;
 }
 
 /* Smooth scrolling */
