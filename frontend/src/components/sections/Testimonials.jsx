@@ -2,6 +2,62 @@ import React, { useState } from 'react'
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react'
 
 /**
+ * Helper pour rendre les étoiles
+ */
+const renderStars = (rating) => {
+  return (
+    <div className="flex gap-1">
+      {[...Array(5)].map((_, i) => (
+        <Star
+          key={i}
+          className={`w-5 h-5 ${
+            i < rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'
+          }`}
+        />
+      ))}
+    </div>
+  )
+}
+
+/**
+ * Composant TestimonialCard (déplacé en dehors du render)
+ */
+const TestimonialCard = ({ testimonial }) => (
+  <div className="bg-white p-8 rounded-lg shadow-md">
+    {testimonial.rating && (
+      <div className="mb-4">
+        {renderStars(testimonial.rating)}
+      </div>
+    )}
+    
+    {testimonial.quote && (
+      <blockquote className="text-gray-700 mb-6 text-lg italic">
+        &quot;{testimonial.quote}&quot;
+      </blockquote>
+    )}
+    
+    <div className="flex items-center gap-4">
+      {testimonial.image && (
+        <img
+          src={testimonial.image}
+          alt={testimonial.author}
+          className="w-12 h-12 rounded-full object-cover"
+        />
+      )}
+      
+      <div>
+        {testimonial.author && (
+          <div className="font-semibold">{testimonial.author}</div>
+        )}
+        {testimonial.role && (
+          <div className="text-sm text-gray-500">{testimonial.role}</div>
+        )}
+      </div>
+    </div>
+  </div>
+)
+
+/**
  * Composant Testimonials
  * Affiche des témoignages clients en grille ou carrousel
  */
@@ -28,56 +84,6 @@ export function Testimonials({
   const prevTestimonial = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
   }
-
-  const renderStars = (rating) => {
-    return (
-      <div className="flex gap-1">
-        {[...Array(5)].map((_, i) => (
-          <Star
-            key={i}
-            className={`w-5 h-5 ${
-              i < rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'
-            }`}
-          />
-        ))}
-      </div>
-    )
-  }
-
-  const TestimonialCard = ({ testimonial }) => (
-    <div className="bg-white p-8 rounded-lg shadow-md">
-      {testimonial.rating && (
-        <div className="mb-4">
-          {renderStars(testimonial.rating)}
-        </div>
-      )}
-      
-      {testimonial.quote && (
-        <blockquote className="text-gray-700 mb-6 text-lg italic">
-          &quot;{testimonial.quote}&quot;
-        </blockquote>
-      )}
-      
-      <div className="flex items-center gap-4">
-        {testimonial.image && (
-          <img
-            src={testimonial.image}
-            alt={testimonial.author}
-            className="w-12 h-12 rounded-full object-cover"
-          />
-        )}
-        
-        <div>
-          {testimonial.author && (
-            <div className="font-semibold">{testimonial.author}</div>
-          )}
-          {testimonial.role && (
-            <div className="text-sm text-gray-500">{testimonial.role}</div>
-          )}
-        </div>
-      </div>
-    </div>
-  )
 
   if (!testimonials || testimonials.length === 0) {
     return (
