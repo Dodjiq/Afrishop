@@ -10,6 +10,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { mockFeatures } from '@/data/mock';
+import { staggerContainer, fadeInUp } from '@/lib/animations';
 
 const iconMap = {
   Zap,
@@ -46,55 +47,59 @@ const Features = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-orange-500/10 text-orange-400 text-sm font-medium mb-4">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-orange-500/10 text-orange-400 text-sm font-medium mb-4 font-sora">
             Fonctionnalités
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 font-sora">
             Tout ce dont vous avez besoin pour lancer rapidement
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="text-gray-400 max-w-2xl mx-auto font-lato">
             Des outils puissants alimentés par l'IA, conçus pour le marché africain
           </p>
         </motion.div>
 
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+          variants={staggerContainer}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {mockFeatures.map((feature, index) => {
             const Icon = iconMap[feature.icon] || Sparkles;
             return (
               <motion.div
                 key={feature.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                variants={fadeInUp}
+                whileHover={{ y: -8, transition: { duration: 0.2 } }}
                 className="group relative"
               >
-                <div className="relative h-full p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-orange-500/50 transition-all duration-300">
+                <div className="relative h-full p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-orange-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/10">
                   {/* Image Preview */}
                   <div className="relative mb-6 rounded-xl overflow-hidden">
                     <img
                       src={featureImages[index]}
                       alt={feature.title}
-                      className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   </div>
 
                   {/* Icon */}
-                  <div className="feature-icon w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+                  <div className="feature-icon w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br from-orange-500/20 to-amber-500/20 border border-orange-500/30">
                     <Icon className="w-6 h-6 text-orange-400" />
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-orange-400 transition-colors">
+                  <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-orange-400 transition-colors font-sora">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">
+                  <p className="text-gray-400 text-sm leading-relaxed font-lato">
                     {feature.description}
                   </p>
 
                   {/* Hover Arrow */}
-                  <div className="mt-4 flex items-center text-orange-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="mt-4 flex items-center text-orange-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity font-sora">
                     En savoir plus
                     <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -102,7 +107,7 @@ const Features = () => {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
