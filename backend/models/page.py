@@ -1,4 +1,4 @@
-"""Modèles Pydantic pour les pages"\""
+"""Modèles Pydantic pour les pages"""
 from pydantic import BaseModel
 from typing import Optional, List
 from datetime import datetime
