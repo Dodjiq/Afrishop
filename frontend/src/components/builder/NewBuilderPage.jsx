@@ -5,7 +5,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { GripVertical, Eye, Code, Plus, Settings, Trash2 } from 'lucide-react'
 import SectionRenderer from './SectionRenderer'
-import SectionLibrary from './SectionLibrary'
+import { AdvancedSectionSelector } from './AdvancedSectionSelector'
 import SectionSettingsPanel from './SectionSettingsPanel'
 
 /**
