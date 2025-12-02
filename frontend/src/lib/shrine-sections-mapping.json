@@ -1,0 +1,161 @@
+{
+  "mapping": {
+    "description": "Mapping entre les sections Shopify Liquid originales et les composants React EasyShop",
+    "sections": [
+      {
+        "liquidFile": "sections/slideshow.liquid",
+        "reactComponent": "SlideshowHero.jsx",
+        "configId": "slideshow-hero",
+        "status": "implemented",
+        "notes": "Carrousel hero avec slides configurables, navigation et auto-rotation",
+        "features": [
+          "Auto-rotation paramétrable",
+          "Positionnement flexible du contenu",
+          "Styles de navigation multiples (dots, counter, numbers)",
+          "Animations Framer Motion",
+          "Responsive mobile"
+        ]
+      },
+      {
+        "liquidFile": "sections/icon-bar.liquid",
+        "reactComponent": "IconBar.jsx",
+        "configId": "icon-bar",
+        "status": "implemented",
+        "notes": "Barre d'icônes pour afficher des features/avantages",
+        "features": [
+          "Layout vertical ou horizontal",
+          "Tailles d'icônes configurables",
+          "Grille responsive",
+          "9+ icônes pré-définies"
+        ]
+      },
+      {
+        "liquidFile": "sections/image-with-text.liquid",
+        "reactComponent": "ImageWithText.jsx",
+        "configId": "image-with-text",
+        "status": "implemented",
+        "notes": "Section combinant image et contenu texte",
+        "features": [
+          "Image à gauche ou droite",
+          "Support richtext HTML",
+          "CTA configurable",
+          "Responsive"
+        ]
+      },
+      {
+        "liquidFile": "sections/featured-collection.liquid",
+        "reactComponent": "FeaturedCollection.jsx",
+        "configId": "featured-collection",
+        "status": "implemented",
+        "notes": "Grille de produits d'une collection",
+        "features": [
+          "Grille responsive configurable",
+          "Ratio d'image personnalisable",
+          "Bouton 'Voir tout'",
+          "Support badges produits",
+          "Prix comparatifs"
+        ]
+      },
+      {
+        "liquidFile": "sections/testimonials.liquid",
+        "reactComponent": "Testimonials.jsx",
+        "configId": "testimonials",
+        "status": "implemented",
+        "notes": "Affichage de témoignages clients",
+        "features": [
+          "Layout grille ou carrousel",
+          "Système de notation par étoiles",
+          "Photo et rôle du client",
+          "Navigation carousel"
+        ]
+      },
+      {
+        "liquidFile": "sections/email-signup-banner.liquid",
+        "reactComponent": "Newsletter.jsx",
+        "configId": "newsletter",
+        "status": "implemented",
+        "notes": "Formulaire d'inscription newsletter",
+        "features": [
+          "Layout centré ou divisé",
+          "Validation email",
+          "États de chargement",
+          "Messages de succès/erreur"
+        ]
+      },
+      {
+        "liquidFile": "sections/comparison-table.liquid",
+        "reactComponent": "ComparisonTable.jsx",
+        "configId": "comparison-table",
+        "status": "planned",
+        "priority": "high",
+        "notes": "Tableau comparatif avec concurrents"
+      },
+      {
+        "liquidFile": "sections/contact-form.liquid",
+        "reactComponent": "ContactForm.jsx",
+        "configId": "contact-form",
+        "status": "planned",
+        "priority": "high",
+        "notes": "Formulaire de contact personnalisable"
+      },
+      {
+        "liquidFile": "sections/multicolumn.liquid",
+        "reactComponent": "Multicolumn.jsx",
+        "configId": "multicolumn",
+        "status": "planned",
+        "priority": "medium",
+        "notes": "Section multi-colonnes flexible"
+      },
+      {
+        "liquidFile": "sections/video.liquid",
+        "reactComponent": "VideoSection.jsx",
+        "configId": "video-section",
+        "status": "planned",
+        "priority": "medium",
+        "notes": "Intégration vidéo avec overlay"
+      },
+      {
+        "liquidFile": "sections/pricing-table.liquid",
+        "reactComponent": "PricingTable.jsx",
+        "configId": "pricing-table",
+        "status": "planned",
+        "priority": "low",
+        "notes": "Tableau de pricing pour SaaS"
+      },
+      {
+        "liquidFile": "sections/results.liquid",
+        "reactComponent": "Results.jsx",
+        "configId": "results-section",
+        "status": "planned",
+        "priority": "low",
+        "notes": "Affichage de résultats/statistiques"
+      }
+    ]
+  },
+  "statistics": {
+    "totalShopifySections": 85,
+    "analyzed": 12,
+    "implemented": 6,
+    "planned": 6,
+    "implementationRate": "50%"
+  },
+  "conversionNotes": {
+    "liquidToReact": [
+      "Les variables Liquid {{ section.settings.* }} sont converties en props React",
+      "Les boucles {% for %} deviennent des .map() JavaScript",
+      "Les conditions {% if %} deviennent des opérateurs ternaires ou &&",
+      "Les filtres Liquid | sont remplacés par des fonctions JavaScript"
+    ],
+    "shopifyApis": [
+      "Shopify Product API → EasyShop Products API",
+      "Shopify Collection API → EasyShop Collections API",
+      "Shopify Cart API → EasyShop Cart Context",
+      "Liquid tags → React components"
+    ],
+    "styling": [
+      "CSS Shopify → Tailwind CSS utility classes",
+      "Liquid CSS variables → Design tokens TypeScript",
+      "Theme settings → JSON configuration"
+    ]
+  }
+}
