@@ -59,7 +59,7 @@ const DashboardHome = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">
-            Bienvenue, Aminata ! \uD83D\uDC4B
+            Bienvenue, Aminata ! 👋
           </h1>
           <p className="text-gray-400">Voici un aperçu de votre activité</p>
         </div>
