@@ -1,100 +1,54 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 
 /**
- * Composant Multicolumn
- * Section avec plusieurs colonnes de contenu
+ * Multicolumn - Colonnes multiples configurables
  */
 export function Multicolumn({
-  title = '',
-  text = '',
-  columns = [],
-  columnsDesktop = 3,
-  alignment = 'center',
+  columns = [
+    {
+      image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400',
+      heading: 'Livraison Rapide',
+      text: 'Recevez vos commandes en 24-48h dans toute l\'Afrique'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400',
+      heading: 'Paiement Flexible',
+      text: 'Mobile Money, cartes bancaires et paiement à la livraison'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400',
+      heading: 'Qualité Garantie',
+      text: 'Produits authentiques avec certificat de qualité'
+    }
+  ],
+  columnsPerRow = 3,
   className = ''
 }) {
-  const gridColumns = {
-    2: 'md:grid-cols-2',
-    3: 'md:grid-cols-3',
-    4: 'md:grid-cols-4'
-  }
-
-  const alignmentClasses = {
-    left: 'text-left',
-    center: 'text-center',
-    right: 'text-right'
-  }
-
-  if (!columns || columns.length === 0) {
-    return (
-      <div className={`py-12 px-6 bg-gray-50 ${className}`}>
-        <p className="text-center text-gray-400">Ajoutez des colonnes à votre section</p>
-      </div>
-    )
-  }
-
   return (
-    <section className={`py-16 px-6 ${className}`}>
+    <section className={`py-20 px-4 ${className}`}>
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        {(title || text) && (
-          <div className={`mb-12 ${alignmentClasses[alignment]}`}>
-            {title && (
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                {title}
-              </h2>
-            )}
-            {text && (
-              <p className="text-lg text-gray-600">
-                {text}
-              </p>
-            )}
-          </div>
-        )}
-
-        {/* Columns */}
-        <div className={`grid grid-cols-1 sm:grid-cols-2 ${gridColumns[columnsDesktop]} gap-8`}>
+        <div className={`grid md:grid-cols-${columnsPerRow} gap-8`}>
           {columns.map((column, index) => (
-            <div 
+            <motion.div
               key={index}
-              className={`${alignmentClasses[alignment]} space-y-4`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="text-center"
             >
-              {/* Image */}
               {column.image && (
-                <div className="mb-4">
+                <div className="aspect-video rounded-lg overflow-hidden mb-4">
                   <img
                     src={column.image}
-                    alt={column.title || `Column ${index + 1}`}
-                    className="w-full h-48 object-cover rounded-lg"
+                    alt={column.heading}
+                    className="w-full h-full object-cover"
                   />
                 </div>
               )}
-
-              {/* Title */}
-              {column.title && (
-                <h3 className="text-xl font-semibold">
-                  {column.title}
-                </h3>
-              )}
-
-              {/* Text */}
-              {column.text && (
-                <div 
-                  className="text-gray-600 prose max-w-none"
-                  dangerouslySetInnerHTML={{ __html: column.text }}
-                />
-              )}
-
-              {/* Link */}
-              {column.linkLabel && (
-                <a
-                  href={column.link || '#'}
-                  className="inline-flex items-center gap-2 text-red-600 hover:text-red-700 font-medium transition-colors"
-                >
-                  {column.linkLabel}
-                  <span>→</span>
-                </a>
-              )}
-            </div>
+              <h3 className="text-2xl font-bold mb-3">{column.heading}</h3>
+              <p className="text-gray-600">{column.text}</p>
+            </motion.div>
           ))}
         </div>
       </div>
