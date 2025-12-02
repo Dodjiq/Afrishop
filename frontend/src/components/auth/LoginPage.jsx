@@ -177,7 +177,7 @@ const LoginPage = () => {
               Créez des boutiques qui convertissent
             </h2>
             <p className="text-gray-300">
-              Rejoignez des milliers d'entrepreneurs africains qui utilisent EasyShop pour lancer leur business en ligne.
+              Rejoignez des milliers d&apos;entrepreneurs africains qui utilisent EasyShop pour lancer leur business en ligne.
             </p>
           </div>
           
