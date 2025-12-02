@@ -48,9 +48,10 @@ function App() {
           {/* Store Preview Route */}
           <Route path="/preview/:storeSlug" element={<StorePreviewPage />} />
           
-          {/* Shrine Demo Routes */}
+          {/* Demo Routes */}
           <Route path="/shrine-demo" element={<ShrineDemo />} />
           <Route path="/shrine-full-demo" element={<ShrineFullDemo />} />
+          <Route path="/ultimate-demo" element={<UltimateDemo />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-right" richColors />
