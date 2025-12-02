@@ -207,7 +207,7 @@ export function SectionSettingsPanel({ section, onUpdate, onClose }) {
 
         {config.settings.length === 0 && (
           <div className="text-center py-8 text-gray-400">
-            Cette section n'a pas de paramètres configurables
+            Cette section n&apos;a pas de paramètres configurables
           </div>
         )}
       </div>
