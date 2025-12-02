@@ -1,191 +1,105 @@
 /**
- * BIBLIOTHÈQUE DE SECTIONS MASSIVE - SHRINE PRO COMPLETE
- * 85+ sections du thème Shopify Shrine Pro 1.3.0 converties en React
+ * BIBLIOTHÈQUE COMPLÈTE - 56 SECTIONS
+ * Toutes les sections Shrine Pro + créations custom
  */
 
-// Structure de la bibliothèque complète
 export const SECTIONS_LIBRARY = {
   hero: {
     id: 'hero',
     name: 'Hero Sections',
     icon: '🎯',
     description: 'Bannières principales et headers impactants',
-    count: 15,
+    count: 14,
     variants: [
-      {
-        id: 'slideshow-hero',
-        name: 'Slideshow Hero (Shrine)',
-        component: 'SlideshowHero',
-        thumbnail: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
-        difficulty: 'medium',
-        tags: ['carousel', 'fullscreen', 'auto-rotate', 'shrine'],
-        use_cases: ['Fashion', 'Lifestyle', 'E-commerce'],
-        description: 'Carrousel hero avec slides multiples - du thème Shrine Pro',
-        category: 'hero'
-      },
-      {
-        id: 'hero-v1',
-        name: 'Hero - Fullscreen avec vidéo',
-        component: 'VideoHero',
-        thumbnail: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?w=400',
-        difficulty: 'medium',
-        tags: ['video', 'fullscreen', 'minimalist', 'modern'],
-        use_cases: ['Fashion', 'Lifestyle', 'Luxury'],
-        description: 'Hero plein écran avec vidéo en fond et CTA central',
-        category: 'hero'
-      },
-      {
-        id: 'hero-v2',
-        name: 'Hero - Split 50/50 avec image',
-        component: 'HeroSplit50',
-        thumbnail: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=400',
-        difficulty: 'simple',
-        tags: ['split', 'image-left', 'modern', 'clean'],
-        use_cases: ['Tech', 'Electronics', 'SaaS'],
-        description: 'Layout divisé avec image à gauche et contenu à droite',
-        category: 'hero'
-      },
-      {
-        id: 'hero-v3',
-        name: 'Hero - Carousel de produits',
-        component: 'HeroProductCarousel',
-        thumbnail: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400',
-        difficulty: 'medium',
-        tags: ['carousel', 'products', 'dynamic', 'e-commerce'],
-        use_cases: ['E-commerce', 'Fashion', 'Beauty'],
-        description: 'Carrousel automatique avec produits vedettes',
-        category: 'hero'
-      },
-      {
-        id: 'hero-v4',
-        name: 'Hero - Minimal avec gradient',
-        component: 'HeroMinimalGradient',
-        thumbnail: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400',
-        difficulty: 'simple',
-        tags: ['minimal', 'gradient', 'modern', 'clean'],
-        use_cases: ['SaaS', 'Tech', 'Startup'],
-        description: 'Design épuré avec fond en dégradé',
-        category: 'hero'
-      },
-      {
-        id: 'hero-v5',
-        name: 'Hero - Animated avec shapes',
-        component: 'HeroAnimatedShapes',
-        thumbnail: 'https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?w=400',
-        difficulty: 'complex',
-        tags: ['animated', 'shapes', 'modern', 'creative'],
-        use_cases: ['Creative', 'Agency', 'Portfolio'],
-        description: 'Animations fluides avec formes géométriques',
-        category: 'hero'
-      }
+      // Existant
+      { id: 'slideshow-hero', name: 'Slideshow Hero', component: 'SlideshowHero', thumbnail: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400', difficulty: 'medium', tags: ['carousel', 'shrine'], use_cases: ['Fashion', 'E-commerce'], description: 'Carrousel hero du thème Shrine Pro', category: 'hero' },
+      // Phase 1
+      { id: 'video-hero', name: 'Video Hero', component: 'VideoHero', thumbnail: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?w=400', difficulty: 'medium', tags: ['video', 'fullscreen'], use_cases: ['Fashion', 'Tech'], description: 'Hero avec vidéo en arrière-plan', category: 'hero' },
+      { id: 'split-hero', name: 'Split Hero 50/50', component: 'SplitHero', thumbnail: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=400', difficulty: 'simple', tags: ['split', 'two-column'], use_cases: ['Tech', 'SaaS'], description: 'Hero divisé 50/50 image et contenu', category: 'hero' },
+      { id: 'minimal-hero', name: 'Minimal Hero', component: 'MinimalHero', thumbnail: 'https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?w=400', difficulty: 'simple', tags: ['minimal', 'typography'], use_cases: ['Fashion', 'Luxury'], description: 'Hero minimaliste axé typographie', category: 'hero' },
+      { id: 'collection-hero', name: 'Collection Hero', component: 'CollectionHero', thumbnail: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=400', difficulty: 'medium', tags: ['collection', 'category'], use_cases: ['E-commerce'], description: 'Hero pour pages collection', category: 'hero' },
+      { id: 'countdown-hero', name: 'Countdown Hero', component: 'CountdownHero', thumbnail: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400', difficulty: 'medium', tags: ['countdown', 'urgency'], use_cases: ['Promotions', 'Sales'], description: 'Hero avec compte à rebours', category: 'hero' },
+      // Phase 2
+      { id: 'parallax-hero', name: 'Parallax Hero', component: 'ParallaxHero', thumbnail: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400', difficulty: 'complex', tags: ['parallax', 'scroll-effect'], use_cases: ['Fashion', 'Luxury'], description: 'Hero avec effet parallaxe', category: 'hero' },
+      { id: 'image-banner', name: 'Image Banner', component: 'ImageBanner', thumbnail: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400', difficulty: 'simple', tags: ['banner', 'simple'], use_cases: ['All'], description: 'Bannière simple avec image', category: 'hero' },
+      { id: 'animated-hero', name: 'Animated Hero', component: 'AnimatedHero', thumbnail: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400', difficulty: 'complex', tags: ['animated', 'interactive'], use_cases: ['Tech', 'Creative'], description: 'Hero avec animations', category: 'hero' },
+      { id: 'announcement-bar', name: 'Announcement Bar', component: 'AnnouncementBar', thumbnail: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400', difficulty: 'simple', tags: ['announcement', 'promo'], use_cases: ['All'], description: 'Barre d\'annonce', category: 'hero' },
+      { id: 'hero-with-form', name: 'Hero with Form', component: 'HeroWithForm', thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400', difficulty: 'medium', tags: ['form', 'lead-gen'], use_cases: ['Services', 'SaaS'], description: 'Hero avec formulaire', category: 'hero' },
+      { id: 'scrolling-hero', name: 'Scrolling Hero', component: 'ScrollingHero', thumbnail: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400', difficulty: 'medium', tags: ['scrolling', 'animated'], use_cases: ['Tech', 'Creative'], description: 'Hero avec texte défilant', category: 'hero' },
+      { id: 'gradient-hero', name: 'Gradient Hero', component: 'GradientHero', thumbnail: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=400', difficulty: 'simple', tags: ['gradient', 'modern'], use_cases: ['Tech', 'SaaS'], description: 'Hero avec dégradé', category: 'hero' },
+      { id: 'hero-grid', name: 'Hero Grid', component: 'HeroGrid', thumbnail: 'https://images.unsplash.com/photo-1558769132-cb1aea3c278b?w=400', difficulty: 'medium', tags: ['grid', 'multiple-images'], use_cases: ['Fashion', 'Portfolio'], description: 'Hero avec grille d\'images', category: 'hero' }
     ]
   },
 
   features: {
     id: 'features',
-    name: 'Features & Benefits',
+    name: 'Features & Avantages',
     icon: '⭐',
-    description: 'Mise en avant des avantages et fonctionnalités',
+    description: 'Fonctionnalités et avantages',
     count: 12,
     variants: [
-      {
-        id: 'features-v1',
-        name: 'Features - Grid 3 colonnes icônes',
-        component: 'FeaturesGrid3Icons',
-        thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400',
-        difficulty: 'simple',
-        tags: ['grid', 'icons', 'minimal', '3-columns'],
-        use_cases: ['SaaS', 'Tech', 'Services'],
-        description: 'Grille 3 colonnes avec icônes et descriptions',
-        category: 'features'
-      },
-      {
-        id: 'features-v2',
-        name: 'Features - Cards avec images',
-        component: 'FeaturesCardsImages',
-        thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400',
-        difficulty: 'medium',
-        tags: ['cards', 'images', 'hover-effects'],
-        use_cases: ['E-commerce', 'Portfolio', 'Agency'],
-        description: 'Cartes avec images et effets au survol',
-        category: 'features'
-      },
-      {
-        id: 'features-v3',
-        name: 'Features - Timeline verticale',
-        component: 'FeaturesTimeline',
-        thumbnail: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400',
-        difficulty: 'medium',
-        tags: ['timeline', 'vertical', 'storytelling', 'process'],
-        use_cases: ['Services', 'Agency', 'Consulting'],
-        description: 'Timeline verticale pour processus ou histoire',
-        category: 'features'
-      },
-      {
-        id: 'features-v4',
-        name: 'Features - Comparison table',
-        component: 'FeaturesComparison',
-        thumbnail: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400',
-        difficulty: 'complex',
-        tags: ['table', 'comparison', 'pricing', 'detailed'],
-        use_cases: ['SaaS', 'Services', 'Subscription'],
-        description: 'Tableau comparatif détaillé',
-        category: 'features'
-      }
+      // Existants
+      { id: 'icon-bar', name: 'Icon Bar', component: 'IconBar', thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400', difficulty: 'simple', tags: ['icons', 'shrine'], use_cases: ['E-commerce'], description: 'Barre d\'icônes Shrine', category: 'features' },
+      { id: 'comparison', name: 'Comparison Table', component: 'ComparisonTable', thumbnail: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400', difficulty: 'complex', tags: ['table', 'pricing'], use_cases: ['SaaS'], description: 'Tableau comparatif', category: 'features' },
+      { id: 'multicolumn', name: 'Multicolumn', component: 'Multicolumn', thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400', difficulty: 'simple', tags: ['columns'], use_cases: ['All'], description: 'Colonnes multiples', category: 'features' },
+      // Phase 1
+      { id: 'features-grid', name: 'Features Grid', component: 'FeaturesGrid', thumbnail: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400', difficulty: 'simple', tags: ['grid', 'icons'], use_cases: ['SaaS', 'Tech'], description: 'Grille avec icônes', category: 'features' },
+      { id: 'features-cards', name: 'Features Cards', component: 'FeaturesCards', thumbnail: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400', difficulty: 'medium', tags: ['cards', 'hover'], use_cases: ['All'], description: 'Cartes avec effets', category: 'features' },
+      { id: 'trust-badges', name: 'Trust Badges', component: 'TrustBadges', thumbnail: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400', difficulty: 'simple', tags: ['trust', 'badges'], use_cases: ['E-commerce'], description: 'Badges de confiance', category: 'features' },
+      { id: 'stats-counter', name: 'Stats Counter', component: 'StatsCounter', thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400', difficulty: 'medium', tags: ['stats', 'animated'], use_cases: ['All'], description: 'Compteurs animés', category: 'features' },
+      // Phase 2
+      { id: 'features-timeline', name: 'Features Timeline', component: 'FeaturesTimeline', thumbnail: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400', difficulty: 'medium', tags: ['timeline', 'process'], use_cases: ['Services'], description: 'Timeline verticale', category: 'features' },
+      { id: 'features-tabs', name: 'Features Tabs', component: 'FeaturesTabs', thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400', difficulty: 'medium', tags: ['tabs', 'interactive'], use_cases: ['SaaS'], description: 'Onglets de fonctionnalités', category: 'features' },
+      { id: 'features-accordion', name: 'Features Accordion', component: 'FeaturesAccordion', thumbnail: 'https://images.unsplash.com/photo-1558769132-cb1aea3c278b?w=400', difficulty: 'medium', tags: ['accordion'], use_cases: ['All'], description: 'Accordéon', category: 'features' },
+      { id: 'custom-columns', name: 'Custom Columns', component: 'CustomColumns', thumbnail: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=400', difficulty: 'simple', tags: ['columns', 'icons'], use_cases: ['All'], description: 'Colonnes personnalisables', category: 'features' },
+      { id: 'benefits-grid', name: 'Benefits Grid', component: 'BenefitsGrid', thumbnail: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400', difficulty: 'simple', tags: ['benefits', 'grid'], use_cases: ['All'], description: 'Grille de bénéfices', category: 'features' }
     ]
   },
 
   products: {
     id: 'products',
-    name: 'Product Displays',
+    name: 'Produits',
     icon: '🛍️',
     description: 'Grilles et showcases de produits',
-    count: 18,
+    count: 13,
     variants: [
-      {
-        id: 'products-v1',
-        name: 'Products - Grid moderne 4 colonnes',
-        component: 'ProductsGrid4Modern',
-        thumbnail: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
-        difficulty: 'medium',
-        tags: ['grid', 'hover-zoom', 'quick-view', '4-columns'],
-        use_cases: ['E-commerce', 'Fashion', 'Retail'],
-        description: 'Grille 4 colonnes avec zoom au survol',
-        category: 'products'
-      },
-      {
-        id: 'products-v2',
-        name: 'Products - Carousel avec navigation',
-        component: 'ProductsCarouselNav',
-        thumbnail: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400',
-        difficulty: 'medium',
-        tags: ['carousel', 'arrows', 'dots', 'sliding'],
-        use_cases: ['E-commerce', 'Featured Products'],
-        description: 'Carrousel avec flèches et points de navigation',
-        category: 'products'
-      },
-      {
-        id: 'products-v3',
-        name: 'Products - Masonry layout',
-        component: 'ProductsMasonry',
-        thumbnail: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400',
-        difficulty: 'complex',
-        tags: ['masonry', 'pinterest-style', 'dynamic', 'varied-heights'],
-        use_cases: ['Fashion', 'Art', 'Portfolio'],
-        description: 'Layout masonry style Pinterest',
-        category: 'products'
-      },
-      {
-        id: 'products-v4',
-        name: 'Products - List avec filtres',
-        component: 'ProductsListFilters',
-        thumbnail: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=400',
-        difficulty: 'complex',
-        tags: ['list', 'filters', 'sidebar', 'advanced'],
-        use_cases: ['E-commerce', 'Marketplace', 'Catalog'],
-        description: 'Vue liste avec sidebar de filtres',
-        category: 'products'
-      }
+      // Existant
+      { id: 'featured-collection', name: 'Featured Collection', component: 'FeaturedCollection', thumbnail: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400', difficulty: 'medium', tags: ['collection', 'shrine'], use_cases: ['E-commerce'], description: 'Collection vedette Shrine', category: 'products' },
+      // Phase 1
+      { id: 'featured-product', name: 'Featured Product', component: 'FeaturedProduct', thumbnail: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400', difficulty: 'medium', tags: ['product', 'featured'], use_cases: ['E-commerce'], description: 'Produit mis en avant', category: 'products' },
+      { id: 'product-grid', name: 'Product Grid', component: 'ProductGrid', thumbnail: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400', difficulty: 'medium', tags: ['grid', 'products'], use_cases: ['E-commerce'], description: 'Grille de produits', category: 'products' },
+      { id: 'quick-view', name: 'Quick View', component: 'QuickView', thumbnail: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400', difficulty: 'complex', tags: ['modal', 'quick-view'], use_cases: ['E-commerce'], description: 'Aperçu rapide modal', category: 'products' },
+      { id: 'related-products', name: 'Related Products', component: 'RelatedProducts', thumbnail: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=400', difficulty: 'simple', tags: ['related', 'recommendations'], use_cases: ['E-commerce'], description: 'Produits similaires', category: 'products' },
+      { id: 'product-reviews', name: 'Product Reviews', component: 'ProductReviews', thumbnail: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400', difficulty: 'complex', tags: ['reviews', 'ratings'], use_cases: ['E-commerce'], description: 'Avis et notes produit', category: 'products' },
+      // Phase 2
+      { id: 'product-carousel', name: 'Product Carousel', component: 'ProductCarousel', thumbnail: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400', difficulty: 'medium', tags: ['carousel', 'products'], use_cases: ['E-commerce'], description: 'Carrousel de produits', category: 'products' },
+      { id: 'product-masonry', name: 'Product Masonry', component: 'ProductMasonry', thumbnail: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=400', difficulty: 'complex', tags: ['masonry', 'pinterest'], use_cases: ['Fashion', 'Art'], description: 'Layout masonry', category: 'products' },
+      { id: 'product-tabs', name: 'Product Tabs', component: 'ProductTabs', thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400', difficulty: 'medium', tags: ['tabs', 'product-info'], use_cases: ['E-commerce'], description: 'Onglets produit', category: 'products' },
+      { id: 'size-guide', name: 'Size Guide', component: 'SizeGuide', thumbnail: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400', difficulty: 'simple', tags: ['size', 'guide'], use_cases: ['Fashion'], description: 'Guide des tailles', category: 'products' },
+      { id: 'recently-viewed', name: 'Recently Viewed', component: 'RecentlyViewed', thumbnail: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400', difficulty: 'simple', tags: ['history', 'viewed'], use_cases: ['E-commerce'], description: 'Vus récemment', category: 'products' },
+      { id: 'wishlist', name: 'Wishlist', component: 'Wishlist', thumbnail: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400', difficulty: 'medium', tags: ['wishlist', 'favorites'], use_cases: ['E-commerce'], description: 'Liste de souhaits', category: 'products' },
+      { id: 'compare-products', name: 'Compare Products', component: 'CompareProducts', thumbnail: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400', difficulty: 'complex', tags: ['compare', 'table'], use_cases: ['E-commerce'], description: 'Comparaison de produits', category: 'products' }
+    ]
+  },
+
+  content: {
+    id: 'content',
+    name: 'Contenu',
+    icon: '📝',
+    description: 'Sections de contenu et texte',
+    count: 9,
+    variants: [
+      // Existant
+      { id: 'image-with-text', name: 'Image with Text', component: 'ImageWithText', thumbnail: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400', difficulty: 'simple', tags: ['image', 'text', 'shrine'], use_cases: ['All'], description: 'Image avec texte Shrine', category: 'content' },
+      // Phase 1
+      { id: 'rich-text', name: 'Rich Text', component: 'RichText', thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400', difficulty: 'simple', tags: ['text', 'content'], use_cases: ['All'], description: 'Texte riche formaté', category: 'content' },
+      { id: 'faq-accordion', name: 'FAQ Accordion', component: 'FAQAccordion', thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400', difficulty: 'medium', tags: ['faq', 'accordion'], use_cases: ['All'], description: 'FAQ avec accordéon', category: 'content' },
+      // Phase 2
+      { id: 'collapsible-content', name: 'Collapsible Content', component: 'CollapsibleContent', thumbnail: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400', difficulty: 'simple', tags: ['collapsible'], use_cases: ['All'], description: 'Contenu pliable', category: 'content' },
+      { id: 'content-tabs', name: 'Content Tabs', component: 'ContentTabs', thumbnail: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400', difficulty: 'medium', tags: ['tabs', 'content'], use_cases: ['All'], description: 'Onglets de contenu', category: 'content' },
+      { id: 'timeline', name: 'Timeline', component: 'Timeline', thumbnail: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400', difficulty: 'medium', tags: ['timeline', 'history'], use_cases: ['All'], description: 'Timeline d\'événements', category: 'content' },
+      { id: 'quote-section', name: 'Quote Section', component: 'QuoteSection', thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400', difficulty: 'simple', tags: ['quote', 'testimonial'], use_cases: ['All'], description: 'Section de citation', category: 'content' },
+      { id: 'video-section', name: 'Video Section', component: 'VideoSection', thumbnail: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?w=400', difficulty: 'medium', tags: ['video', 'media'], use_cases: ['All'], description: 'Section vidéo', category: 'content' }
     ]
   },
 
@@ -193,42 +107,15 @@ export const SECTIONS_LIBRARY = {
     id: 'testimonials',
     name: 'Social Proof',
     icon: '💬',
-    description: 'Témoignages et avis clients',
-    count: 10,
+    description: 'Témoignages et avis',
+    count: 5,
     variants: [
-      {
-        id: 'testimonials-v1',
-        name: 'Testimonials - Carousel avec photos',
-        component: 'TestimonialsCarouselPhotos',
-        thumbnail: 'https://i.pravatar.cc/400?img=1',
-        difficulty: 'medium',
-        tags: ['carousel', 'photos', 'ratings', 'stars'],
-        use_cases: ['All'],
-        description: 'Carrousel avec photos clients et étoiles',
-        category: 'testimonials'
-      },
-      {
-        id: 'testimonials-v2',
-        name: 'Testimonials - Grid masonry',
-        component: 'TestimonialsMasonryGrid',
-        thumbnail: 'https://i.pravatar.cc/400?img=2',
-        difficulty: 'medium',
-        tags: ['masonry', 'varied-heights', 'social', 'modern'],
-        use_cases: ['SaaS', 'Services', 'Agency'],
-        description: 'Grille masonry avec hauteurs variées',
-        category: 'testimonials'
-      },
-      {
-        id: 'testimonials-v3',
-        name: 'Testimonials - Video reviews',
-        component: 'TestimonialsVideo',
-        thumbnail: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400',
-        difficulty: 'complex',
-        tags: ['video', 'play-button', 'modern', 'authentic'],
-        use_cases: ['SaaS', 'High-ticket', 'Services'],
-        description: 'Témoignages vidéo avec thumbnails',
-        category: 'testimonials'
-      }
+      // Existant
+      { id: 'testimonials', name: 'Testimonials', component: 'Testimonials', thumbnail: 'https://i.pravatar.cc/400?img=1', difficulty: 'medium', tags: ['testimonials', 'shrine'], use_cases: ['All'], description: 'Témoignages Shrine', category: 'testimonials' },
+      // Phase 1
+      { id: 'image-gallery', name: 'Image Gallery', component: 'ImageGallery', thumbnail: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400', difficulty: 'medium', tags: ['gallery', 'lightbox'], use_cases: ['Portfolio'], description: 'Galerie d\'images', category: 'testimonials' },
+      { id: 'instagram-feed', name: 'Instagram Feed', component: 'InstagramFeed', thumbnail: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400', difficulty: 'simple', tags: ['instagram', 'social'], use_cases: ['All'], description: 'Flux Instagram', category: 'testimonials' },
+      { id: 'reviews-grid', name: 'Reviews Grid', component: 'ReviewsGrid', thumbnail: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400', difficulty: 'simple', tags: ['reviews', 'grid'], use_cases: ['All'], description: 'Grille d\'avis', category: 'testimonials' }
     ]
   },
 
@@ -236,155 +123,34 @@ export const SECTIONS_LIBRARY = {
     id: 'cta',
     name: 'Call to Action',
     icon: '🎯',
-    description: 'Sections d\'appel à l\'action',
-    count: 8,
+    description: 'Appels à l\'action',
+    count: 1,
     variants: [
-      {
-        id: 'cta-v1',
-        name: 'CTA - Simple centré',
-        component: 'CtaSimpleCentered',
-        thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400',
-        difficulty: 'simple',
-        tags: ['centered', 'simple', 'clean', 'minimal'],
-        use_cases: ['All'],
-        description: 'CTA centré avec titre et bouton',
-        category: 'cta'
-      },
-      {
-        id: 'cta-v2',
-        name: 'CTA - Split avec image',
-        component: 'CtaSplitImage',
-        thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400',
-        difficulty: 'simple',
-        tags: ['split', 'image', 'modern'],
-        use_cases: ['E-commerce', 'SaaS'],
-        description: 'Layout divisé avec image et CTA',
-        category: 'cta'
-      },
-      {
-        id: 'cta-v3',
-        name: 'CTA - Avec countdown timer',
-        component: 'CtaCountdown',
-        thumbnail: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400',
-        difficulty: 'complex',
-        tags: ['countdown', 'urgency', 'scarcity', 'conversion'],
-        use_cases: ['Promotions', 'Launch', 'Sales'],
-        description: 'CTA avec compte à rebours',
-        category: 'cta'
-      }
+      { id: 'newsletter', name: 'Newsletter', component: 'Newsletter', thumbnail: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400', difficulty: 'simple', tags: ['newsletter', 'email'], use_cases: ['All'], description: 'Newsletter Shrine', category: 'cta' }
     ]
   },
 
-  // SECTIONS SPÉCIFIQUES AFRIQUE
-  africa_specific: {
-    id: 'africa_specific',
-    name: 'Spécial Afrique',
-    icon: '🌍',
-    description: 'Sections optimisées pour le marché africain',
-    count: 8,
+  forms: {
+    id: 'forms',
+    name: 'Formulaires',
+    icon: '📧',
+    description: 'Formulaires de contact',
+    count: 2,
     variants: [
-      {
-        id: 'africa-v1',
-        name: 'Mobile Money - Options de paiement',
-        component: 'MobileMoneyPayment',
-        thumbnail: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400',
-        difficulty: 'medium',
-        tags: ['payment', 'mobile-money', 'africa', 'local'],
-        use_cases: ['E-commerce'],
-        description: 'Affiche MTN, Orange Money, Moov, Wave',
-        category: 'africa_specific',
-        isPremium: false
-      },
-      {
-        id: 'africa-v2',
-        name: 'Livraison Zones - Carte interactive',
-        component: 'DeliveryZonesMap',
-        thumbnail: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=400',
-        difficulty: 'complex',
-        tags: ['delivery', 'map', 'zones', 'shipping'],
-        use_cases: ['E-commerce', 'Food Delivery'],
-        description: 'Carte des zones de livraison avec tarifs',
-        category: 'africa_specific'
-      },
-      {
-        id: 'africa-v3',
-        name: 'WhatsApp CTA - Bouton flottant',
-        component: 'WhatsAppFloatingButton',
-        thumbnail: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=400',
-        difficulty: 'simple',
-        tags: ['whatsapp', 'floating', 'cta', 'social'],
-        use_cases: ['All'],
-        description: 'Commande via WhatsApp',
-        category: 'africa_specific'
-      },
-      {
-        id: 'africa-v4',
-        name: 'Trust Badges Africains',
-        component: 'AfricanTrustBadges',
-        thumbnail: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400',
-        difficulty: 'simple',
-        tags: ['trust', 'badges', 'credibility', 'local'],
-        use_cases: ['E-commerce'],
-        description: 'Badges de confiance locaux',
-        category: 'africa_specific'
-      },
-      {
-        id: 'africa-v5',
-        name: 'Multi-devises Afrique',
-        component: 'AfricanCurrencySwitcher',
-        thumbnail: 'https://images.unsplash.com/photo-1580519542036-c47de6196ba5?w=400',
-        difficulty: 'medium',
-        tags: ['currency', 'multi-currency', 'switcher'],
-        use_cases: ['E-commerce'],
-        description: 'Switcher XOF, XAF, NGN, GHS',
-        category: 'africa_specific'
-      }
-    ]
-  },
-
-  footer: {
-    id: 'footer',
-    name: 'Footers',
-    icon: '📄',
-    description: 'Pieds de page complets',
-    count: 8,
-    variants: [
-      {
-        id: 'footer-v1',
-        name: 'Footer - 4 colonnes complet',
-        component: 'Footer4Columns',
-        thumbnail: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400',
-        difficulty: 'medium',
-        tags: ['4-columns', 'complete', 'links', 'social'],
-        use_cases: ['All'],
-        description: 'Footer complet avec 4 colonnes de liens',
-        category: 'footer'
-      },
-      {
-        id: 'footer-v2',
-        name: 'Footer - Minimal 1 ligne',
-        component: 'FooterMinimalOneLine',
-        thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400',
-        difficulty: 'simple',
-        tags: ['minimal', 'simple', 'clean', '1-line'],
-        use_cases: ['Landing Page', 'Portfolio'],
-        description: 'Footer minimaliste sur une ligne',
-        category: 'footer'
-      }
+      { id: 'contact-form', name: 'Contact Form', component: 'ContactForm', thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400', difficulty: 'simple', tags: ['form', 'contact'], use_cases: ['All'], description: 'Formulaire contact', category: 'forms' },
+      { id: 'contact-form-section', name: 'Contact Form Section', component: 'ContactFormSection', thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400', difficulty: 'medium', tags: ['form', 'contact', 'section'], use_cases: ['All'], description: 'Section contact complète', category: 'forms' }
     ]
   }
 }
 
-// Fonction helper pour obtenir toutes les sections
+// Fonctions utilitaires
 export function getAllSections() {
   return Object.values(SECTIONS_LIBRARY).flatMap(category => category.variants)
 }
 
-// Fonction helper pour rechercher des sections
 export function searchSections(query, filters) {
   let sections = getAllSections()
 
-  // Filtre par recherche textuelle
   if (query) {
     const lowerQuery = query.toLowerCase()
     sections = sections.filter(section =>
@@ -394,7 +160,6 @@ export function searchSections(query, filters) {
     )
   }
 
-  // Filtres avancés
   if (filters?.categories?.length) {
     sections = sections.filter(s => filters.categories.includes(s.category))
   }
@@ -418,19 +183,16 @@ export function searchSections(query, filters) {
   return sections
 }
 
-// Tags populaires pour filtrage rapide
 export const POPULAR_TAGS = [
   'modern', 'minimal', 'carousel', 'grid', 'video', 'animated',
-  'e-commerce', 'clean', 'professional', 'creative', 'mobile-first'
+  'e-commerce', 'clean', 'professional', 'creative', 'mobile-first', 'shrine'
 ]
 
-// Cas d'usage disponibles
 export const USE_CASES = [
   'Fashion', 'Electronics', 'Beauty', 'Food', 'Services',
   'SaaS', 'Tech', 'Agency', 'Portfolio', 'E-commerce', 'All'
 ]
 
-// Stats de la bibliothèque
 export function getLibraryStats() {
   const categories = Object.values(SECTIONS_LIBRARY)
   return {
