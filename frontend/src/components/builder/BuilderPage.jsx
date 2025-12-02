@@ -473,7 +473,7 @@ const SortableBlock = ({ block, isSelected, onClick, onDelete, onDuplicate }) =>
             {...attributes}
             {...listeners}
             className="p-1 hover:bg-gray-700 rounded cursor-grab active:cursor-grabbing"
-            title="D\u00e9placer"
+            title="Déplacer"
           >
             <GripVertical className="w-3 h-3" />
           </button>
