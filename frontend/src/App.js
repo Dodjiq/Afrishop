@@ -12,6 +12,7 @@ import DashboardHome from "@/components/dashboard/DashboardHome";
 import StoresPage from "@/components/dashboard/StoresPage";
 import NewStorePage from "@/components/dashboard/NewStorePage";
 import BuilderPage from "@/components/builder/BuilderPage";
+import NewBuilderPage from "@/components/builder/NewBuilderPage";
 import StorePreviewPage from "@/components/store/StorePreviewPage";
 import ShrineDemo from "@/pages/ShrineDemo";
 import ShrineFullDemo from "@/pages/ShrineFullDemo";
