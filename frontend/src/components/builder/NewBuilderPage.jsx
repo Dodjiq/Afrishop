@@ -136,8 +136,8 @@ export default function NewBuilderPage() {
       {/* Left Sidebar - Section Library */}
       {showLibrary && (
         <div className="w-96 border-r bg-white shadow-lg overflow-hidden">
-          <SectionLibrary
-            onAddSection={handleAddSection}
+          <AdvancedSectionSelector
+            onSelect={handleAddSection}
             onClose={() => setShowLibrary(false)}
           />
         </div>
