@@ -55,7 +55,7 @@ export function SectionLibrary({ onAddSection, onClose }) {
           )}
         </div>
         <p className="text-gray-600">
-          Choisissez une section pour l'ajouter à votre page
+          Choisissez une section pour l&apos;ajouter à votre page
         </p>
       </div>
 
