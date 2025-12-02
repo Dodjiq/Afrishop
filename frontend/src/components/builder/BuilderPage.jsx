@@ -240,7 +240,7 @@ const BuilderPage = () => {
           <div className="h-6 w-px bg-white/10" />
           <div>
             <h1 className="text-white font-semibold">Mode Africaine</h1>
-            <p className="text-xs text-gray-400">Derni\u00e8re sauvegarde: il y a 2 min</p>
+            <p className="text-xs text-gray-400">Dernière sauvegarde: il y a 2 min</p>
           </div>
         </div>
 
