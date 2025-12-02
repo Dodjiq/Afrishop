@@ -43,56 +43,56 @@ export const mockStores = [
 export const mockTemplates = [
   {
     id: 'tpl_001',
-    name: 'Fashion Elite',
+    name: 'Afro Modern',
     thumbnail: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
     category: 'fashion',
-    color_scheme: { primary: '#E67E22', secondary: '#F39C12', accent: '#ECF0F1', background: '#FFFFFF' },
+    color_scheme: { primary: '#FF6B35', secondary: '#F7931E', accent: '#FFD23F', background: '#FFFBF5' },
     is_premium: false,
-    popularity_score: 95
+    popularity_score: 98
   },
   {
     id: 'tpl_002',
-    name: 'Tech Modern',
+    name: 'Tech Minimal',
     thumbnail: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop',
     category: 'electronics',
-    color_scheme: { primary: '#3498DB', secondary: '#2C3E50', accent: '#ECF0F1', background: '#1A1A2E' },
+    color_scheme: { primary: '#6366F1', secondary: '#8B5CF6', accent: '#EC4899', background: '#FFFFFF' },
+    is_premium: false,
+    popularity_score: 92
+  },
+  {
+    id: 'tpl_003',
+    name: 'Luxury Gold',
+    thumbnail: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=300&fit=crop',
+    category: 'beauty',
+    color_scheme: { primary: '#1E293B', secondary: '#A78BFA', accent: '#FBBF24', background: '#FAFAF9' },
+    is_premium: true,
+    popularity_score: 95
+  },
+  {
+    id: 'tpl_004',
+    name: 'Savanna Earth',
+    thumbnail: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop',
+    category: 'home',
+    color_scheme: { primary: '#D97706', secondary: '#92400E', accent: '#F59E0B', background: '#FFFDF7' },
     is_premium: false,
     popularity_score: 88
   },
   {
-    id: 'tpl_003',
-    name: 'Beauty Glow',
-    thumbnail: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=300&fit=crop',
-    category: 'beauty',
-    color_scheme: { primary: '#E91E63', secondary: '#9C27B0', accent: '#FFF8E1', background: '#FFFFFF' },
-    is_premium: true,
-    popularity_score: 92
-  },
-  {
-    id: 'tpl_004',
-    name: 'Food & Saveurs',
+    id: 'tpl_005',
+    name: 'Fresh & Tasty',
     thumbnail: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop',
     category: 'food',
-    color_scheme: { primary: '#FF5722', secondary: '#4CAF50', accent: '#FFF3E0', background: '#FFFFFF' },
+    color_scheme: { primary: '#22C55E', secondary: '#16A34A', accent: '#F97316', background: '#FFFFFF' },
     is_premium: false,
-    popularity_score: 78
-  },
-  {
-    id: 'tpl_005',
-    name: 'Home Comfort',
-    thumbnail: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop',
-    category: 'home',
-    color_scheme: { primary: '#8D6E63', secondary: '#5D4037', accent: '#EFEBE9', background: '#FFFFFF' },
-    is_premium: true,
     popularity_score: 85
   },
   {
     id: 'tpl_006',
-    name: 'Minimal Pro',
+    name: 'Midnight Pro',
     thumbnail: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop',
     category: 'general',
-    color_scheme: { primary: '#000000', secondary: '#333333', accent: '#F5F5F5', background: '#FFFFFF' },
-    is_premium: false,
+    color_scheme: { primary: '#F97316', secondary: '#EA580C', accent: '#FBBF24', background: '#0A0A0A' },
+    is_premium: true,
     popularity_score: 90
   }
 ];
