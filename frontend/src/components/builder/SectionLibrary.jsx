@@ -14,7 +14,7 @@ export function SectionLibrary({ onAddSection, onClose }) {
   const handleAddSection = (section) => {
     // Créer une nouvelle instance de section avec des valeurs par défaut
     const newSection = {
-      id: `section-${Date.now()}`,
+      id: `section-${Math.random().toString(36).substr(2, 9)}`,
       type: section.id,
       settings: {}
     }
