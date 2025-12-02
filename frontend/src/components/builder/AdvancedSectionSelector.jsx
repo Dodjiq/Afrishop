@@ -184,7 +184,7 @@ export function AdvancedSectionSelector({ onSelect, onClose }) {
 
               {/* Use Cases */}
               <div>
-                <label className="text-sm font-semibold mb-2 block">Cas d'usage</label>
+                <label className="text-sm font-semibold mb-2 block">Cas d&apos;usage</label>
                 <div className="flex flex-wrap gap-2">
                   {USE_CASES.map(uc => (
                     <button
