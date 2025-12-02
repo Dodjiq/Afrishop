@@ -1,52 +1,46 @@
-import { useEffect } from "react";
-import "@/App.css";
+import React from "react";
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import { Toaster } from "@/components/ui/sonner";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+// Pages
+import LandingPage from "@/components/landing/LandingPage";
+import LoginPage from "@/components/auth/LoginPage";
+import SignUpPage from "@/components/auth/SignUpPage";
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import DashboardHome from "@/components/dashboard/DashboardHome";
+import StoresPage from "@/components/dashboard/StoresPage";
+import NewStorePage from "@/components/dashboard/NewStorePage";
+import BuilderPage from "@/components/builder/BuilderPage";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          
+          {/* Dashboard Routes */}
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<DashboardHome />} />
+            <Route path="stores" element={<StoresPage />} />
+            <Route path="stores/new" element={<NewStorePage />} />
+            <Route path="stores/:id" element={<StoresPage />} />
+            <Route path="products" element={<DashboardHome />} />
+            <Route path="analytics" element={<DashboardHome />} />
+            <Route path="billing" element={<DashboardHome />} />
+            <Route path="settings" element={<DashboardHome />} />
+            <Route path="help" element={<DashboardHome />} />
           </Route>
+          
+          {/* Builder Route */}
+          <Route path="/dashboard/builder" element={<BuilderPage />} />
         </Routes>
       </BrowserRouter>
+      <Toaster position="top-right" richColors />
     </div>
   );
 }
