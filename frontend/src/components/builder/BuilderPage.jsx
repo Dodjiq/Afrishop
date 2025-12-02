@@ -361,7 +361,7 @@ const BuilderPage = () => {
                     <div className="bg-white/5 rounded-xl border-2 border-dashed border-white/10 p-12 text-center">
                       <LayoutGrid className="w-12 h-12 mx-auto text-gray-500 mb-4" />
                       <h3 className="text-lg font-semibold text-white mb-2">
-                        Commencez \u00e0 cr\u00e9er
+                      Commencez à créer
                       </h3>
                       <p className="text-gray-400 mb-4">
                         Ajoutez des blocs depuis la barre lat\u00e9rale
