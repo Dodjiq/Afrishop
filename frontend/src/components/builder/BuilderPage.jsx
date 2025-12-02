@@ -216,7 +216,7 @@ const BuilderPage = () => {
     // Simulate save
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsSaving(false);
-    toast.success('Boutique sauvegard\u00e9e');
+    toast.success('Boutique sauvegardée');
   };
 
   const previewWidths = {
