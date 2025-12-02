@@ -869,7 +869,7 @@ const BlockEditor = ({ block, onUpdate, onClose }) => {
       <div className="p-4 border-t border-white/10">
         <Button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white">
           <Sparkles className="w-4 h-4 mr-2" />
-          G\u00e9n\u00e9rer avec l'IA
+          Générer avec l'IA
         </Button>
       </div>
     </div>
