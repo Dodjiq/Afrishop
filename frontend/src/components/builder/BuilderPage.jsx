@@ -424,7 +424,7 @@ const BuilderPage = () => {
               <div>
                 <Settings className="w-12 h-12 mx-auto text-gray-500 mb-4" />
                 <p className="text-gray-400">
-                  S\u00e9lectionnez un bloc pour modifier ses propri\u00e9t\u00e9s
+                  Sélectionnez un bloc pour modifier ses propriétés
                 </p>
               </div>
             </div>
