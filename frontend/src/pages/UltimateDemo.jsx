@@ -26,6 +26,21 @@ import {
  * - 4 sections spéciales Afrique
  * - Widgets interactifs
  */
+// Section Divider Component
+const SectionDivider = ({ icon: Icon, title, description }) => (
+  <div className="bg-gradient-to-r from-gray-100 to-gray-50 py-8 px-6 border-y">
+    <div className="max-w-7xl mx-auto flex items-center gap-4">
+      <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+        <Icon className="w-6 h-6 text-white" />
+      </div>
+      <div>
+        <h2 className="text-xl font-bold text-gray-900">{title}</h2>
+        <p className="text-sm text-gray-600">{description}</p>
+      </div>
+    </div>
+  </div>
+)
+
 export default function UltimateDemo() {
   const [showWidgets, setShowWidgets] = useState(true)
 
@@ -52,21 +67,6 @@ export default function UltimateDemo() {
           </div>
         </div>
       </div>
-
-      {/* Section Divider Component */}
-      const SectionDivider = ({ icon: Icon, title, description }) => (
-        <div className="bg-gradient-to-r from-gray-100 to-gray-50 py-8 px-6 border-y">
-          <div className="max-w-7xl mx-auto flex items-center gap-4">
-            <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-              <Icon className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold text-gray-900">{title}</h2>
-              <p className="text-sm text-gray-600">{description}</p>
-            </div>
-          </div>
-        </div>
-      )
 
       {/* 1. HERO SLIDESHOW */}
       <SlideshowHero
