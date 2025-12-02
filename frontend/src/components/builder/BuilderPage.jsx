@@ -392,7 +392,7 @@ const BuilderPage = () => {
               <DragOverlay>
                 {activeId ? (
                   <div className="bg-white/10 rounded-xl p-4 shadow-2xl opacity-80">
-                    Bloc en d\u00e9placement...
+                  Bloc en déplacement...
                   </div>
                 ) : null}
               </DragOverlay>
