@@ -281,7 +281,7 @@ const BuilderPage = () => {
             className="border-white/20 text-white hover:bg-white/10"
           >
             <Eye className="w-4 h-4 mr-2" />
-            <span className="hidden sm:inline">Pr\u00e9visualiser</span>
+            <span className="hidden sm:inline">Prévisualiser</span>
           </Button>
 
           <Button
