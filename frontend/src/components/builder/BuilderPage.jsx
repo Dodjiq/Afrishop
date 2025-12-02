@@ -186,7 +186,7 @@ const BuilderPage = () => {
     const newBlocks = [...blocks];
     newBlocks.splice(index + 1, 0, newBlock);
     setBlocks(newBlocks);
-    toast.success('Bloc dupliqu\u00e9');
+    toast.success('Bloc dupliqué');
   }, [blocks]);
 
   const deleteBlock = useCallback((blockId) => {
