@@ -170,7 +170,7 @@ const BuilderPage = () => {
     };
     setBlocks([...blocks, newBlock]);
     setSelectedBlock(newBlock);
-    toast.success('Bloc ajout\u00e9');
+    toast.success('Bloc ajouté');
   }, [blocks]);
 
   const duplicateBlock = useCallback((blockId) => {
