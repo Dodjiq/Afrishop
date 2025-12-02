@@ -364,7 +364,7 @@ const BuilderPage = () => {
                       Commencez à créer
                       </h3>
                       <p className="text-gray-400 mb-4">
-                        Ajoutez des blocs depuis la barre lat\u00e9rale
+                      Ajoutez des blocs depuis la barre latérale
                       </p>
                       <Button
                         onClick={() => addBlock('hero')}
