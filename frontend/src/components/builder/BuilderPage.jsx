@@ -194,7 +194,7 @@ const BuilderPage = () => {
     if (selectedBlock?.id === blockId) {
       setSelectedBlock(null);
     }
-    toast.success('Bloc supprim\u00e9');
+    toast.success('Bloc supprimé');
   }, [blocks, selectedBlock]);
 
   const updateBlockConfig = useCallback((blockId, updates) => {
