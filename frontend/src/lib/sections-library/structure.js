@@ -1,6 +1,6 @@
 /**
- * BIBLIOTHÈQUE DE SECTIONS MASSIVE
- * Structure extensible pour supporter 390+ sections (style Relume)
+ * BIBLIOTHÈQUE DE SECTIONS MASSIVE - SHRINE PRO COMPLETE
+ * 85+ sections du thème Shopify Shrine Pro 1.3.0 converties en React
  */
 
 // Structure de la bibliothèque complète
@@ -10,13 +10,24 @@ export const SECTIONS_LIBRARY = {
     name: 'Hero Sections',
     icon: '🎯',
     description: 'Bannières principales et headers impactants',
-    count: 15, // Sera étendu à 60+
+    count: 15,
     variants: [
+      {
+        id: 'slideshow-hero',
+        name: 'Slideshow Hero (Shrine)',
+        component: 'SlideshowHero',
+        thumbnail: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
+        difficulty: 'medium',
+        tags: ['carousel', 'fullscreen', 'auto-rotate', 'shrine'],
+        use_cases: ['Fashion', 'Lifestyle', 'E-commerce'],
+        description: 'Carrousel hero avec slides multiples - du thème Shrine Pro',
+        category: 'hero'
+      },
       {
         id: 'hero-v1',
         name: 'Hero - Fullscreen avec vidéo',
-        component: 'HeroFullscreenVideo',
-        thumbnail: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
+        component: 'VideoHero',
+        thumbnail: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?w=400',
         difficulty: 'medium',
         tags: ['video', 'fullscreen', 'minimalist', 'modern'],
         use_cases: ['Fashion', 'Lifestyle', 'Luxury'],
