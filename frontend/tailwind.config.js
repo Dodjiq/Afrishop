@@ -10,6 +10,7 @@ module.exports = {
   		fontFamily: {
   			'sora': ['Sora', 'sans-serif'],
   			'lato': ['Lato', 'sans-serif'],
+  			'syne': ['Syne', 'Sora', 'sans-serif'],
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
