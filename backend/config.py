@@ -5,6 +5,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     # MongoDB
     mongo_url: str = os.getenv("MONGO_URL", "")
+    db_name: str = os.getenv("DB_NAME", "easyshop")
     
     # Supabase
     supabase_url: str = os.getenv("SUPABASE_URL", "")
@@ -17,7 +18,8 @@ class Settings(BaseSettings):
     # App config
     app_name: str = "EasyShop Africa API"
     debug: bool = True
+    cors_origins: str = os.getenv("CORS_ORIGINS", "*")
     
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config = SettingsConfigDict(env_file=".env", extra="allow")
 
 settings = Settings()
