@@ -29,7 +29,7 @@ export function SectionRenderer({ section, onEdit, onDelete, isEditable = false 
           Section inconnue : {section.type}
         </p>
         <p className="text-yellow-600 text-sm mt-2">
-          Ce type de section n'est pas encore implémenté
+          Ce type de section n&apos;est pas encore implémenté
         </p>
       </div>
     )
