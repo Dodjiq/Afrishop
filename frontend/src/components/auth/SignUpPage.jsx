@@ -105,7 +105,7 @@ const SignUpPage = () => {
               Créez votre compte
             </h1>
             <p className="text-gray-400">
-              Rejoignez des milliers d'entrepreneurs africains
+              Rejoignez des milliers d&apos;entrepreneurs africains
             </p>
           </div>
 
