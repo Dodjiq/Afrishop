@@ -43,6 +43,9 @@ function App() {
           
           {/* Store Preview Route */}
           <Route path="/preview/:storeSlug" element={<StorePreviewPage />} />
+          
+          {/* Shrine Demo Route */}
+          <Route path="/shrine-demo" element={<ShrineDemo />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-right" richColors />
