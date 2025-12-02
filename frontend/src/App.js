@@ -13,6 +13,7 @@ import StoresPage from "@/components/dashboard/StoresPage";
 import NewStorePage from "@/components/dashboard/NewStorePage";
 import BuilderPage from "@/components/builder/BuilderPage";
 import StorePreviewPage from "@/components/store/StorePreviewPage";
+import ShrineDemo from "@/pages/ShrineDemo";
 
 function App() {
   return (
