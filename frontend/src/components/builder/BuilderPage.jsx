@@ -158,7 +158,7 @@ const BuilderPage = () => {
         const newIndex = items.findIndex((i) => i.id === over.id);
         return arrayMove(items, oldIndex, newIndex);
       });
-      toast.success('Bloc d\u00e9plac\u00e9');
+      toast.success('Bloc déplacé');
     }
   };
 
