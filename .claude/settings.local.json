@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(npm run dev)",
+      "Bash(taskkill /F /PID 10948)",
+      "Bash(npm install:*)",
+      "Bash(npx shadcn@latest add switch separator tabs progress)",
+      "Bash(taskkill:*)",
+      "Bash(find:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
