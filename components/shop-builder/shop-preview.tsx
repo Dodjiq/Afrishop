@@ -28,13 +28,42 @@ export function ShopPreview({ productData, shopConfig, onBack }: ShopPreviewProp
     setIsPublishing(true)
 
     try {
-      // TODO: Save shop to database
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      // Importer le service
+      const { ShopService } = await import("@/lib/services/shop-service")
 
-      // Redirect to dashboard
-      router.push("/dashboard")
+      // Préparer les données
+      const shopData = {
+        name: productData.name,
+        productData: {
+          name: productData.name,
+          description: productData.description,
+          price: productData.price,
+          images: productData.images || [],
+          features: productData.features || [],
+        },
+        shopConfig: {
+          brandColor: shopConfig.brandColor,
+          brandTone: shopConfig.brandTone || "modern",
+          fontPair: shopConfig.fontPair || "modern",
+          shopName: shopConfig.shopName || productData.name,
+          sections: shopConfig.sections || [],
+        },
+      }
+
+      // Sauvegarder la boutique
+      const createdShop = await ShopService.createShop(shopData)
+
+      // Sauvegarder aussi localement comme backup
+      ShopService.saveToLocalStorage(createdShop)
+
+      // Attendre 1 seconde pour l'effet visuel
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+
+      // Rediriger vers la page des boutiques
+      router.push("/shops")
     } catch (error) {
       console.error("Publish error:", error)
+      alert("Une erreur est survenue lors de la publication. Veuillez réessayer.")
     } finally {
       setIsPublishing(false)
     }

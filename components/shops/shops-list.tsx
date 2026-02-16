@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -28,68 +28,68 @@ import {
   GearIcon,
   TrashIcon,
   ChartBarIcon,
+  DownloadIcon,
+  FileJsonIcon,
 } from "@phosphor-icons/react"
-
-// Mock data - will be replaced with real data from Supabase
-const allShops = [
-  {
-    id: "1",
-    name: "Ma Boutique Mode Africaine",
-    url: "ma-boutique-mode.myshopify.com",
-    status: "active",
-    products: 23,
-    orders: 15,
-    revenue: 450000,
-    createdAt: "2026-02-10",
-    theme: "Dawn",
-  },
-  {
-    id: "2",
-    name: "Electronics Store TG",
-    url: "electronics-tg.myshopify.com",
-    status: "active",
-    products: 15,
-    orders: 8,
-    revenue: 280000,
-    createdAt: "2026-02-08",
-    theme: "Sense",
-  },
-  {
-    id: "3",
-    name: "Kids & Babies Shop",
-    url: "kids-babies-ci.myshopify.com",
-    status: "generating",
-    products: 0,
-    orders: 0,
-    revenue: 0,
-    createdAt: "2026-02-15",
-    theme: "Refresh",
-  },
-  {
-    id: "4",
-    name: "Beauty & Cosmetics CI",
-    url: "beauty-cosmetics.myshopify.com",
-    status: "active",
-    products: 31,
-    orders: 22,
-    revenue: 680000,
-    createdAt: "2026-01-28",
-    theme: "Dawn",
-  },
-]
+import { ShopService } from "@/lib/services/shop-service"
+import type { Shop } from "@/app/api/shops/route"
 
 const statusConfig = {
-  active: { label: "Active", color: "bg-green-500" },
-  generating: { label: "En génération", color: "bg-orange-500" },
-  failed: { label: "Échec", color: "bg-red-500" },
-  paused: { label: "En pause", color: "bg-gray-500" },
+  published: { label: "Publiée", color: "bg-green-500" },
+  draft: { label: "Brouillon", color: "bg-orange-500" },
+  archived: { label: "Archivée", color: "bg-gray-500" },
 }
 
 export function ShopsList() {
   const [searchQuery, setSearchQuery] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
+  const [shops, setShops] = useState<Shop[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
-  const filteredShops = allShops.filter((shop) => {
+  // Charger les boutiques au montage du composant
+  useEffect(() => {
+    loadShops()
+  }, [])
+
+  const loadShops = async () => {
+    try {
+      setIsLoading(true)
+      const fetchedShops = await ShopService.getShops()
+      setShops(fetchedShops)
+    } catch (error) {
+      console.error("Error loading shops:", error)
+      // En cas d'erreur, charger depuis localStorage
+      const localShops = ShopService.getFromLocalStorage()
+      setShops(localShops)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleDelete = async (shopId: string) => {
+    if (!confirm("Êtes-vous sûr de vouloir supprimer cette boutique ?")) {
+      return
+    }
+
+    try {
+      await ShopService.deleteShop(shopId)
+      ShopService.deleteFromLocalStorage(shopId)
+      await loadShops()
+    } catch (error) {
+      console.error("Error deleting shop:", error)
+      alert("Erreur lors de la suppression de la boutique")
+    }
+  }
+
+  const handleExportJSON = (shop: Shop) => {
+    ShopService.exportAsJSON(shop)
+  }
+
+  const handleDownloadHTML = (shop: Shop) => {
+    ShopService.downloadHTML(shop)
+  }
+
+  const filteredShops = shops.filter((shop) => {
     const matchesSearch = shop.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase())
@@ -124,10 +124,9 @@ export function ShopsList() {
               <SelectContent>
                 <SelectGroup>
                   <SelectItem value="all">Tous les statuts</SelectItem>
-                  <SelectItem value="active">Actives</SelectItem>
-                  <SelectItem value="generating">En génération</SelectItem>
-                  <SelectItem value="paused">En pause</SelectItem>
-                  <SelectItem value="failed">Échec</SelectItem>
+                  <SelectItem value="published">Publiées</SelectItem>
+                  <SelectItem value="draft">Brouillons</SelectItem>
+                  <SelectItem value="archived">Archivées</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -135,123 +134,144 @@ export function ShopsList() {
         </CardContent>
       </Card>
 
+      {/* Loading State */}
+      {isLoading && (
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <div className="mb-4 h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto" />
+            <p className="text-muted-foreground">Chargement des boutiques...</p>
+          </div>
+        </div>
+      )}
+
       {/* Shops Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filteredShops.map((shop) => {
-          const status = statusConfig[shop.status as keyof typeof statusConfig]
-          return (
-            <Card key={shop.id} className="group relative">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <CardTitle className="line-clamp-1 text-lg">
-                      {shop.name}
-                    </CardTitle>
-                    <CardDescription className="mt-1 flex items-center gap-2">
-                      <span className={`h-2 w-2 rounded-full ${status.color}`} />
-                      {status.label}
-                    </CardDescription>
-                  </div>
+      {!isLoading && (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {filteredShops.map((shop) => {
+            const status = statusConfig[shop.status as keyof typeof statusConfig]
+            return (
+              <Card key={shop.id} className="group relative">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="line-clamp-1 text-lg">
+                        {shop.name}
+                      </CardTitle>
+                      <CardDescription className="mt-1 flex items-center gap-2">
+                        <span className={`h-2 w-2 rounded-full ${status.color}`} />
+                        {status.label}
+                      </CardDescription>
+                    </div>
 
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <DotsThreeVerticalIcon size={16} />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem asChild>
-                        <a
-                          href={`https://${shop.url}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <DotsThreeVerticalIcon size={16} />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem asChild>
+                          <a
+                            href={shop.url || "#"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <ArrowSquareOutIcon />
+                            Ouvrir la boutique
+                          </a>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleDownloadHTML(shop)}>
+                          <DownloadIcon />
+                          Télécharger HTML
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleExportJSON(shop)}>
+                          <FileJsonIcon />
+                          Exporter JSON
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href={`/shops/${shop.id}`}>
+                            <GearIcon />
+                            Gérer
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <ChartBarIcon />
+                          Statistiques
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          className="text-destructive focus:text-destructive"
+                          onClick={() => handleDelete(shop.id)}
                         >
-                          <ArrowSquareOutIcon />
-                          Ouvrir la boutique
-                        </a>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <Link href={`/shops/${shop.id}`}>
-                          <GearIcon />
-                          Gérer
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <ChartBarIcon />
-                        Statistiques
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem className="text-destructive focus:text-destructive">
-                        <TrashIcon />
-                        Supprimer
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-              </CardHeader>
-
-              <CardContent>
-                <div className="space-y-3 text-sm">
-                  <div>
-                    <div className="text-xs text-muted-foreground">URL</div>
-                    <div className="font-mono text-xs">{shop.url}</div>
+                          <TrashIcon />
+                          Supprimer
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
+                </CardHeader>
 
-                  <div className="grid grid-cols-3 gap-2 rounded-lg bg-muted/50 p-3">
+                <CardContent>
+                  <div className="space-y-3 text-sm">
                     <div>
-                      <div className="text-xs text-muted-foreground">Produits</div>
-                      <div className="text-lg font-bold">{shop.products}</div>
+                      <div className="text-xs text-muted-foreground">URL</div>
+                      <div className="font-mono text-xs truncate">{shop.url || "En attente"}</div>
                     </div>
-                    <div>
-                      <div className="text-xs text-muted-foreground">Commandes</div>
-                      <div className="text-lg font-bold">{shop.orders}</div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-muted-foreground">Revenus</div>
-                      <div className="text-lg font-bold">
-                        {(shop.revenue / 1000).toFixed(0)}k
+
+                    <div className="grid grid-cols-2 gap-2 rounded-lg bg-muted/50 p-3">
+                      <div>
+                        <div className="text-xs text-muted-foreground">Prix</div>
+                        <div className="text-lg font-bold">${shop.productData.price}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-muted-foreground">Sections</div>
+                        <div className="text-lg font-bold">{shop.shopConfig.sections.length}</div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="flex items-center justify-between pt-2">
-                    <Badge variant="outline" className="text-xs">
-                      {shop.theme}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">
-                      {new Date(shop.createdAt).toLocaleDateString("fr-FR")}
-                    </span>
-                  </div>
-                </div>
-
-                {shop.status === "active" && (
-                  <Button asChild className="mt-4 w-full" variant="outline">
-                    <Link href={`/shops/${shop.id}`}>Gérer</Link>
-                  </Button>
-                )}
-
-                {shop.status === "generating" && (
-                  <div className="mt-4">
-                    <div className="mb-2 h-2 w-full overflow-hidden rounded-full bg-muted">
-                      <div className="h-full w-2/3 animate-pulse bg-primary" />
+                    <div className="pt-2">
+                      <div className="text-xs text-muted-foreground mb-1">Couleur de marque</div>
+                      <div className="flex items-center gap-2">
+                        <div
+                          className="w-6 h-6 rounded-full border-2 border-border"
+                          style={{ backgroundColor: shop.shopConfig.brandColor }}
+                        />
+                        <span className="text-xs font-mono">{shop.shopConfig.brandColor}</span>
+                      </div>
                     </div>
-                    <p className="text-center text-xs text-muted-foreground">
-                      Génération en cours...
-                    </p>
+
+                    <div className="flex items-center justify-between pt-2 border-t">
+                      <Badge variant="outline" className="text-xs">
+                        {shop.shopConfig.brandTone}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">
+                        {new Date(shop.createdAt).toLocaleDateString("fr-FR")}
+                      </span>
+                    </div>
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          )
-        })}
-      </div>
+
+                  {shop.status === "published" && (
+                    <Button asChild className="mt-4 w-full" variant="outline">
+                      <a href={shop.url} target="_blank" rel="noopener noreferrer">
+                        Voir la boutique
+                      </a>
+                    </Button>
+                  )}
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
+      )}
 
       {/* Empty State */}
-      {filteredShops.length === 0 && (
+      {!isLoading && filteredShops.length === 0 && (
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <p className="mb-4 text-muted-foreground">
-              Aucune boutique trouvée
+              {searchQuery || statusFilter !== "all"
+                ? "Aucune boutique ne correspond à vos critères"
+                : "Aucune boutique créée pour le moment"}
             </p>
             <Button asChild variant="outline">
               <Link href="/create">Créer votre première boutique</Link>
