@@ -1,0 +1,825 @@
+{
+  "theme": {
+    "id": "shrine-pro-inspired",
+    "name": "Shrine Pro (Adapted for EasyShop)",
+    "version": "1.0.0",
+    "description": "Collection de sections e-commerce premium adaptées pour la plateforme EasyShop"
+  },
+  "categories": [
+    {
+      "id": "hero",
+      "name": "Hero & Bannières",
+      "icon": "🎯",
+      "description": "Sections d'en-tête et bannières principales"
+    },
+    {
+      "id": "features",
+      "name": "Fonctionnalités",
+      "icon": "⭐",
+      "description": "Mise en avant des avantages et features"
+    },
+    {
+      "id": "products",
+      "name": "Produits",
+      "icon": "🛍️",
+      "description": "Collections et grilles de produits"
+    },
+    {
+      "id": "content",
+      "name": "Contenu",
+      "icon": "📝",
+      "description": "Sections de contenu texte et images"
+    },
+    {
+      "id": "social",
+      "name": "Social Proof",
+      "icon": "💬",
+      "description": "Témoignages et avis clients"
+    },
+    {
+      "id": "forms",
+      "name": "Formulaires",
+      "icon": "📧",
+      "description": "Formulaires de contact et newsletter"
+    },
+    {
+      "id": "media",
+      "name": "Média",
+      "icon": "🎬",
+      "description": "Images, vidéos et galeries"
+    }
+  ],
+  "sections": [
+    {
+      "id": "slideshow-hero",
+      "name": "Hero Slideshow",
+      "category": "hero",
+      "component": "SlideshowHero",
+      "description": "Carrousel d'images hero avec texte et boutons CTA",
+      "thumbnail": "/thumbnails/slideshow-hero.jpg",
+      "complexity": "medium",
+      "settings": [
+        {
+          "type": "select",
+          "id": "slide_height",
+          "label": "Hauteur des slides",
+          "options": [
+            { "value": "small", "label": "Petite (400px)" },
+            { "value": "medium", "label": "Moyenne (550px)" },
+            { "value": "large", "label": "Grande (750px)" },
+            { "value": "full", "label": "Plein écran" }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "checkbox",
+          "id": "auto_rotate",
+          "label": "Rotation automatique",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "change_slides_speed",
+          "label": "Vitesse de rotation (secondes)",
+          "min": 3,
+          "max": 10,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "select",
+          "id": "slider_visual",
+          "label": "Style de navigation",
+          "options": [
+            { "value": "dots", "label": "Points" },
+            { "value": "numbers", "label": "Numéros" },
+            { "value": "counter", "label": "Compteur" }
+          ],
+          "default": "dots"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "slide",
+          "name": "Slide",
+          "settings": [
+            {
+              "type": "image",
+              "id": "image",
+              "label": "Image de fond"
+            },
+            {
+              "type": "text",
+              "id": "heading",
+              "label": "Titre",
+              "default": "Bienvenue dans notre boutique"
+            },
+            {
+              "type": "textarea",
+              "id": "subheading",
+              "label": "Sous-titre",
+              "default": "Découvrez notre collection"
+            },
+            {
+              "type": "text",
+              "id": "button_label",
+              "label": "Texte du bouton",
+              "default": "Acheter maintenant"
+            },
+            {
+              "type": "url",
+              "id": "link",
+              "label": "Lien du bouton"
+            },
+            {
+              "type": "select",
+              "id": "box_align",
+              "label": "Position du texte",
+              "options": [
+                { "value": "top-left", "label": "Haut gauche" },
+                { "value": "top-center", "label": "Haut centre" },
+                { "value": "top-right", "label": "Haut droite" },
+                { "value": "middle-left", "label": "Milieu gauche" },
+                { "value": "middle-center", "label": "Milieu centre" },
+                { "value": "middle-right", "label": "Milieu droite" },
+                { "value": "bottom-left", "label": "Bas gauche" },
+                { "value": "bottom-center", "label": "Bas centre" },
+                { "value": "bottom-right", "label": "Bas droite" }
+              ],
+              "default": "middle-center"
+            },
+            {
+              "type": "color",
+              "id": "text_color",
+              "label": "Couleur du texte",
+              "default": "#ffffff"
+            },
+            {
+              "type": "color",
+              "id": "button_bg_color",
+              "label": "Couleur du bouton",
+              "default": "#dd1d1d"
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Hero Slideshow",
+          "blocks": [
+            { "type": "slide" },
+            { "type": "slide" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "icon-bar",
+      "name": "Barre d'Icônes",
+      "category": "features",
+      "component": "IconBar",
+      "description": "Affichage d'icônes avec texte pour mettre en avant des caractéristiques",
+      "thumbnail": "/thumbnails/icon-bar.jpg",
+      "complexity": "simple",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre de la section",
+          "default": "Nos Avantages"
+        },
+        {
+          "type": "select",
+          "id": "icon_layout",
+          "label": "Disposition des icônes",
+          "options": [
+            { "value": "vertical", "label": "Vertical" },
+            { "value": "horizontal", "label": "Horizontal" }
+          ],
+          "default": "vertical"
+        },
+        {
+          "type": "select",
+          "id": "icon_size",
+          "label": "Taille des icônes",
+          "options": [
+            { "value": "small", "label": "Petite" },
+            { "value": "medium", "label": "Moyenne" },
+            { "value": "large", "label": "Grande" }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "range",
+          "id": "columns_desktop",
+          "label": "Colonnes (Desktop)",
+          "min": 2,
+          "max": 6,
+          "step": 1,
+          "default": 4
+        }
+      ],
+      "blocks": [
+        {
+          "type": "column",
+          "name": "Colonne",
+          "settings": [
+            {
+              "type": "select",
+              "id": "icon",
+              "label": "Icône",
+              "options": [
+                { "value": "check_circle", "label": "✓ Check" },
+                { "value": "truck", "label": "🚚 Livraison" },
+                { "value": "shield", "label": "🛡️ Sécurité" },
+                { "value": "gift", "label": "🎁 Cadeau" },
+                { "value": "support", "label": "💬 Support" },
+                { "value": "star", "label": "⭐ Qualité" }
+              ],
+              "default": "check_circle"
+            },
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Titre",
+              "default": "Livraison Gratuite"
+            },
+            {
+              "type": "textarea",
+              "id": "text",
+              "label": "Description",
+              "default": "Livraison gratuite sur toutes les commandes"
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Barre d'Icônes",
+          "blocks": [
+            { "type": "column" },
+            { "type": "column" },
+            { "type": "column" },
+            { "type": "column" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "image-with-text",
+      "name": "Image avec Texte",
+      "category": "content",
+      "component": "ImageWithText",
+      "description": "Section combinant image et contenu texte côte à côte",
+      "thumbnail": "/thumbnails/image-with-text.jpg",
+      "complexity": "simple",
+      "settings": [
+        {
+          "type": "image",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Disposition",
+          "options": [
+            { "value": "image-left", "label": "Image à gauche" },
+            { "value": "image-right", "label": "Image à droite" }
+          ],
+          "default": "image-left"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Titre",
+          "default": "Notre Histoire"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Contenu",
+          "default": "<p>Racontez l'histoire de votre marque</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texte du bouton"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Lien du bouton"
+        }
+      ],
+      "presets": [
+        {
+          "name": "Image avec Texte"
+        }
+      ]
+    },
+    {
+      "id": "featured-collection",
+      "name": "Collection en Vedette",
+      "category": "products",
+      "component": "FeaturedCollection",
+      "description": "Grille de produits d'une collection",
+      "thumbnail": "/thumbnails/featured-collection.jpg",
+      "complexity": "medium",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre de la section",
+          "default": "Collection Vedette"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "range",
+          "id": "products_to_show",
+          "label": "Nombre de produits à afficher",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "columns_desktop",
+          "label": "Colonnes (Desktop)",
+          "min": 2,
+          "max": 5,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "checkbox",
+          "id": "show_view_all",
+          "label": "Afficher le bouton 'Voir tout'",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "image_ratio",
+          "label": "Ratio des images",
+          "options": [
+            { "value": "square", "label": "Carré" },
+            { "value": "portrait", "label": "Portrait" },
+            { "value": "landscape", "label": "Paysage" }
+          ],
+          "default": "square"
+        }
+      ],
+      "presets": [
+        {
+          "name": "Collection en Vedette"
+        }
+      ]
+    },
+    {
+      "id": "testimonials",
+      "name": "Témoignages",
+      "category": "social",
+      "component": "Testimonials",
+      "description": "Carrousel ou grille de témoignages clients",
+      "thumbnail": "/thumbnails/testimonials.jpg",
+      "complexity": "medium",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "Ce que disent nos clients"
+        },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Disposition",
+          "options": [
+            { "value": "grid", "label": "Grille" },
+            { "value": "carousel", "label": "Carrousel" }
+          ],
+          "default": "carousel"
+        },
+        {
+          "type": "range",
+          "id": "columns_desktop",
+          "label": "Colonnes (Desktop)",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "default": 3
+        },
+        {
+          "type": "checkbox",
+          "id": "auto_rotate",
+          "label": "Rotation automatique",
+          "default": true
+        }
+      ],
+      "blocks": [
+        {
+          "type": "testimonial",
+          "name": "Témoignage",
+          "settings": [
+            {
+              "type": "image",
+              "id": "image",
+              "label": "Photo du client"
+            },
+            {
+              "type": "text",
+              "id": "author",
+              "label": "Nom du client",
+              "default": "Jean Dupont"
+            },
+            {
+              "type": "textarea",
+              "id": "quote",
+              "label": "Témoignage",
+              "default": "Excellent service et produits de qualité !"
+            },
+            {
+              "type": "range",
+              "id": "rating",
+              "label": "Note",
+              "min": 1,
+              "max": 5,
+              "step": 1,
+              "default": 5
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Témoignages",
+          "blocks": [
+            { "type": "testimonial" },
+            { "type": "testimonial" },
+            { "type": "testimonial" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "newsletter",
+      "name": "Newsletter",
+      "category": "forms",
+      "component": "Newsletter",
+      "description": "Formulaire d'inscription à la newsletter",
+      "thumbnail": "/thumbnails/newsletter.jpg",
+      "complexity": "simple",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "Restez Informé"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Inscrivez-vous pour recevoir nos dernières offres"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texte du bouton",
+          "default": "S'inscrire"
+        },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Disposition",
+          "options": [
+            { "value": "centered", "label": "Centré" },
+            { "value": "split", "label": "Divisé" }
+          ],
+          "default": "centered"
+        }
+      ],
+      "presets": [
+        {
+          "name": "Newsletter"
+        }
+      ]
+    },
+    {
+      "id": "comparison-table",
+      "name": "Tableau Comparatif",
+      "category": "features",
+      "component": "ComparisonTable",
+      "description": "Tableau comparant votre offre à la concurrence",
+      "thumbnail": "/thumbnails/comparison-table.jpg",
+      "complexity": "complex",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "Pourquoi nous choisir ?"
+        },
+        {
+          "type": "text",
+          "id": "us_label",
+          "label": "Label colonne 'Nous'",
+          "default": "Notre marque"
+        },
+        {
+          "type": "text",
+          "id": "others_label",
+          "label": "Label colonne 'Autres'",
+          "default": "Concurrents"
+        },
+        {
+          "type": "range",
+          "id": "number_of_competitors",
+          "label": "Nombre de colonnes concurrents",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "default": 1
+        }
+      ],
+      "blocks": [
+        {
+          "type": "row",
+          "name": "Ligne",
+          "settings": [
+            {
+              "type": "text",
+              "id": "benefit",
+              "label": "Avantage",
+              "default": "Livraison gratuite"
+            },
+            {
+              "type": "checkbox",
+              "id": "us",
+              "label": "Nous",
+              "default": true
+            },
+            {
+              "type": "checkbox",
+              "id": "others",
+              "label": "Concurrent 1",
+              "default": false
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Tableau Comparatif",
+          "blocks": [
+            { "type": "row" },
+            { "type": "row" },
+            { "type": "row" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contact-form",
+      "name": "Formulaire de Contact",
+      "category": "forms",
+      "component": "ContactForm",
+      "description": "Formulaire de contact personnalisable",
+      "thumbnail": "/thumbnails/contact-form.jpg",
+      "complexity": "medium",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "Contactez-nous"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texte du bouton",
+          "default": "Envoyer"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_full_width",
+          "label": "Bouton pleine largeur",
+          "default": true
+        }
+      ],
+      "blocks": [
+        {
+          "type": "field_row",
+          "name": "Ligne de champs",
+          "settings": [
+            {
+              "type": "select",
+              "id": "input_1_type",
+              "label": "Type de champ 1",
+              "options": [
+                { "value": "name", "label": "Nom" },
+                { "value": "email", "label": "Email" },
+                { "value": "phone", "label": "Téléphone" },
+                { "value": "custom", "label": "Personnalisé" }
+              ],
+              "default": "name"
+            },
+            {
+              "type": "checkbox",
+              "id": "input_1_required",
+              "label": "Champ 1 requis",
+              "default": false
+            },
+            {
+              "type": "select",
+              "id": "input_2_type",
+              "label": "Type de champ 2",
+              "options": [
+                { "value": "none", "label": "Aucun" },
+                { "value": "name", "label": "Nom" },
+                { "value": "email", "label": "Email" },
+                { "value": "phone", "label": "Téléphone" },
+                { "value": "custom", "label": "Personnalisé" }
+              ],
+              "default": "email"
+            },
+            {
+              "type": "checkbox",
+              "id": "input_2_required",
+              "label": "Champ 2 requis",
+              "default": false
+            }
+          ]
+        },
+        {
+          "type": "textarea",
+          "name": "Zone de texte",
+          "settings": [
+            {
+              "type": "select",
+              "id": "input_type",
+              "label": "Type",
+              "options": [
+                { "value": "comment", "label": "Commentaire" },
+                { "value": "message", "label": "Message" },
+                { "value": "custom", "label": "Personnalisé" }
+              ],
+              "default": "comment"
+            },
+            {
+              "type": "checkbox",
+              "id": "input_required",
+              "label": "Requis",
+              "default": false
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Formulaire de Contact",
+          "blocks": [
+            { "type": "field_row" },
+            { "type": "textarea" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "multicolumn",
+      "name": "Multi-colonnes",
+      "category": "content",
+      "component": "Multicolumn",
+      "description": "Section avec plusieurs colonnes de contenu",
+      "thumbnail": "/thumbnails/multicolumn.jpg",
+      "complexity": "simple",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre"
+        },
+        {
+          "type": "range",
+          "id": "columns_desktop",
+          "label": "Colonnes (Desktop)",
+          "min": 2,
+          "max": 4,
+          "step": 1,
+          "default": 3
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alignement du contenu",
+          "options": [
+            { "value": "left", "label": "Gauche" },
+            { "value": "center", "label": "Centre" },
+            { "value": "right", "label": "Droite" }
+          ],
+          "default": "center"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "column",
+          "name": "Colonne",
+          "settings": [
+            {
+              "type": "image",
+              "id": "image",
+              "label": "Image"
+            },
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Titre"
+            },
+            {
+              "type": "richtext",
+              "id": "text",
+              "label": "Description"
+            },
+            {
+              "type": "text",
+              "id": "link_label",
+              "label": "Texte du lien"
+            },
+            {
+              "type": "url",
+              "id": "link",
+              "label": "Lien"
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Multi-colonnes",
+          "blocks": [
+            { "type": "column" },
+            { "type": "column" },
+            { "type": "column" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "video-section",
+      "name": "Section Vidéo",
+      "category": "media",
+      "component": "VideoSection",
+      "description": "Intégration vidéo avec overlay de texte",
+      "thumbnail": "/thumbnails/video-section.jpg",
+      "complexity": "simple",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Vidéo"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "URL vidéo (YouTube/Vimeo)"
+        },
+        {
+          "type": "image",
+          "id": "cover_image",
+          "label": "Image de couverture"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Titre"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_autoplay",
+          "label": "Lecture automatique",
+          "default": false
+        }
+      ],
+      "presets": [
+        {
+          "name": "Section Vidéo"
+        }
+      ]
+    }
+  ]
+}
