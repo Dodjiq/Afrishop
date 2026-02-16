@@ -12,6 +12,7 @@ import {
   CheckCircleIcon,
 } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
+import { SectionRenderer } from "@/components/sections/section-renderer"
 
 interface ShopPreviewProps {
   productData: any
@@ -169,12 +170,23 @@ export function ShopPreview({ productData, shopConfig, onBack }: ShopPreviewProp
               </div>
             )}
 
-            {/* Sections Count */}
-            <div className="p-8 bg-muted/30 text-center">
-              <p className="text-sm text-muted-foreground">
-                + {shopConfig.sections?.length || 0} sections personnalisées
-              </p>
-            </div>
+            {/* Render Custom Sections */}
+            {shopConfig.sections && shopConfig.sections.length > 0 && (
+              <SectionRenderer
+                sections={shopConfig.sections}
+                productData={productData}
+                shopConfig={shopConfig}
+              />
+            )}
+
+            {/* Sections Count (if no sections) */}
+            {(!shopConfig.sections || shopConfig.sections.length === 0) && (
+              <div className="p-8 bg-muted/30 text-center">
+                <p className="text-sm text-muted-foreground">
+                  Aucune section personnalisée ajoutée
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </Card>
