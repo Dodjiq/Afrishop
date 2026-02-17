@@ -94,7 +94,7 @@ export function HeroSection() {
           {/* Badge */}
           <Badge variant="secondary" className="mb-6 gap-2 animate-fade-in">
             <SparkleIcon weight="fill" size={16} />
-            Plateforme de dropshipping pour l'Afrique
+            La plateforme numéro 1 pour ta boutique Shopify en Afrique
           </Badge>
 
           {/* Title */}
