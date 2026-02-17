@@ -25,6 +25,7 @@ import {
   AsteriskIcon,
 } from "@phosphor-icons/react"
 import { validatePasswordStrength } from "@/lib/password-validation"
+import { createClient } from "@/lib/supabase/client"
 
 const countries = [
   { value: "tg", label: "🇹🇬 Togo", phoneFormat: "+228 90 12 34 56", phoneCode: "+228" },
@@ -39,7 +40,9 @@ const countries = [
 
 export function SignupForm() {
   const router = useRouter()
+  const supabase = createClient()
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -91,50 +94,78 @@ export function SignupForm() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
+    setError(null)
 
     // Validate password strength
     if (!passwordStrength.isValid) {
       setPasswordTouched(true)
+      setError("Votre mot de passe doit respecter tous les critères de sécurité")
       return
     }
 
     setIsLoading(true)
 
     try {
-      // TODO: Implement Supabase auth
-      // const { data, error } = await supabase.auth.signUp({
-      //   email: formData.email,
-      //   password: formData.password,
-      //   options: {
-      //     data: {
-      //       full_name: formData.fullName,
-      //       phone: formData.phone,
-      //       country: formData.country,
-      //     },
-      //   },
-      // })
-
-      // Send welcome email
-      const emailResponse = await fetch("/api/auth/send-welcome-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: formData.email,
-          name: formData.fullName,
-        }),
+      // Inscription avec Supabase
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            full_name: formData.fullName,
+            phone: formData.phone,
+            country: formData.country,
+          },
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
       })
 
-      if (!emailResponse.ok) {
-        console.error("Failed to send welcome email")
+      if (signUpError) {
+        // Gérer les différents types d'erreurs
+        if (signUpError.message.includes("already registered")) {
+          setError("Cet email est déjà utilisé. Essayez de vous connecter.")
+        } else if (signUpError.message.includes("Password")) {
+          setError("Le mot de passe ne respecte pas les critères de sécurité")
+        } else {
+          setError(signUpError.message)
+        }
+        return
       }
 
-      // For now, simulate signup
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      // Si l'inscription réussit mais nécessite confirmation email
+      if (data.user && !data.session) {
+        setError(null)
+        alert(
+          "✅ Compte créé avec succès!\n\nVeuillez vérifier votre email pour confirmer votre inscription."
+        )
+        router.push("/login")
+        return
+      }
 
-      // Redirect to dashboard
-      router.push("/dashboard")
-    } catch (error) {
+      // Si l'inscription réussit avec auto-connexion
+      if (data.session) {
+        // Envoyer email de bienvenue (optionnel)
+        try {
+          await fetch("/api/auth/send-welcome-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: formData.email,
+              name: formData.fullName,
+            }),
+          })
+        } catch (emailError) {
+          // Ne pas bloquer si l'email échoue
+          console.error("Failed to send welcome email:", emailError)
+        }
+
+        // Redirection vers le dashboard
+        router.push("/dashboard")
+        router.refresh()
+      }
+    } catch (error: any) {
       console.error("Signup error:", error)
+      setError("Une erreur est survenue lors de l'inscription")
     } finally {
       setIsLoading(false)
     }
@@ -389,15 +420,24 @@ export function SignupForm() {
           </FieldGroup>
         </CardContent>
 
-        <CardFooter>
+        <CardFooter className="flex flex-col gap-4">
+          {error && (
+            <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20">
+              <p className="text-sm text-destructive">{error}</p>
+            </div>
+          )}
+
           <Button
             type="submit"
             className="w-full gap-2"
             size="lg"
-            disabled={isLoading}
+            disabled={isLoading || !passwordStrength.isValid}
           >
             {isLoading ? (
-              "Création du compte..."
+              <>
+                <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                Création du compte...
+              </>
             ) : (
               <>
                 <RocketLaunchIcon size={20} weight="fill" />

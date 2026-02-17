@@ -8,31 +8,49 @@ import { Input } from "@/components/ui/input"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { EnvelopeIcon, LockIcon, SignInIcon } from "@phosphor-icons/react"
+import { createClient } from "@/lib/supabase/client"
 
 export function LoginForm() {
   const router = useRouter()
+  const supabase = createClient()
   const [isLoading, setIsLoading] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState<string | null>(null)
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     setIsLoading(true)
+    setError(null)
 
     try {
-      // TODO: Implement Supabase auth
-      // const { data, error } = await supabase.auth.signInWithPassword({
-      //   email,
-      //   password,
-      // })
+      // Connexion avec Supabase
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
 
-      // For now, simulate login
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      if (signInError) {
+        // Gérer les différents types d'erreurs
+        if (signInError.message.includes("Invalid login credentials")) {
+          setError("Email ou mot de passe incorrect")
+        } else if (signInError.message.includes("Email not confirmed")) {
+          setError("Veuillez confirmer votre email avant de vous connecter")
+        } else {
+          setError(signInError.message)
+        }
+        return
+      }
 
-      // Redirect to dashboard
-      router.push("/dashboard")
-    } catch (error) {
+      // Connexion réussie
+      if (data.user) {
+        // Redirection vers le dashboard
+        router.push("/dashboard")
+        router.refresh()
+      }
+    } catch (error: any) {
       console.error("Login error:", error)
+      setError("Une erreur est survenue lors de la connexion")
     } finally {
       setIsLoading(false)
     }
@@ -86,6 +104,12 @@ export function LoginForm() {
         </CardContent>
 
         <CardFooter className="flex flex-col gap-4">
+          {error && (
+            <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20">
+              <p className="text-sm text-destructive">{error}</p>
+            </div>
+          )}
+
           <Button
             type="submit"
             className="w-full gap-2"
@@ -93,7 +117,10 @@ export function LoginForm() {
             disabled={isLoading}
           >
             {isLoading ? (
-              "Connexion..."
+              <>
+                <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                Connexion...
+              </>
             ) : (
               <>
                 <SignInIcon size={20} />
