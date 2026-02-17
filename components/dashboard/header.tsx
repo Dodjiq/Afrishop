@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
@@ -12,23 +13,30 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
 import { BellIcon, UserIcon, GearIcon, SignOutIcon } from "@phosphor-icons/react"
+import { createClient } from "@/lib/supabase/client"
 
 export function DashboardHeader() {
   const router = useRouter()
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const supabase = createClient()
 
   const handleLogout = async () => {
     try {
-      // TODO: Implement Supabase auth logout
-      // await supabase.auth.signOut()
+      setIsLoggingOut(true)
 
-      // Clear any local storage or session data
-      localStorage.clear()
-      sessionStorage.clear()
+      // Sign out from Supabase
+      await supabase.auth.signOut()
+
+      // Clear any local storage
+      localStorage.removeItem("afrishop_shops")
 
       // Redirect to login page
       router.push("/login")
     } catch (error) {
       console.error("Logout error:", error)
+      alert("Erreur lors de la déconnexion")
+    } finally {
+      setIsLoggingOut(false)
     }
   }
 
@@ -79,9 +87,19 @@ export function DashboardHeader() {
             <DropdownMenuItem
               className="text-destructive focus:text-destructive"
               onClick={handleLogout}
+              disabled={isLoggingOut}
             >
-              <SignOutIcon />
-              Déconnexion
+              {isLoggingOut ? (
+                <>
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                  Déconnexion...
+                </>
+              ) : (
+                <>
+                  <SignOutIcon />
+                  Déconnexion
+                </>
+              )}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
