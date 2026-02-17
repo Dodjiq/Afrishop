@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
@@ -101,16 +102,12 @@ export function LoginForm() {
             )}
           </Button>
 
-          <button
-            type="button"
-            className="text-sm text-muted-foreground hover:text-primary"
-            onClick={() => {
-              // TODO: Implement password reset
-              alert("Fonctionnalité à venir")
-            }}
+          <Link
+            href="/forgot-password"
+            className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
             Mot de passe oublié ?
-          </button>
+          </Link>
         </CardFooter>
       </form>
     </Card>

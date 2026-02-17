@@ -1,7 +1,9 @@
 import { Metadata } from "next"
 import { LoginForm } from "@/components/auth/login-form"
 import Link from "next/link"
+import { Suspense } from "react"
 import { StorefrontIcon } from "@phosphor-icons/react/dist/ssr"
+import { SuccessMessage } from "@/components/auth/success-message"
 
 export const metadata: Metadata = {
   title: "Connexion | AfriShop",
@@ -35,6 +37,11 @@ export default function LoginPage() {
             Connectez-vous pour accéder à votre tableau de bord
           </p>
         </div>
+
+        {/* Success Message */}
+        <Suspense fallback={null}>
+          <SuccessMessage />
+        </Suspense>
 
         <LoginForm />
 
