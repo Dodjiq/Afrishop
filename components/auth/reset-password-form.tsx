@@ -8,9 +8,11 @@ import { Label } from "@/components/ui/label"
 import { Field } from "@/components/ui/field"
 import { LockIcon, CheckCircleIcon, WarningCircleIcon } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
+import { createClient } from "@/lib/supabase/client"
 
 export function ResetPasswordForm() {
   const router = useRouter()
+  const supabase = createClient()
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -60,19 +62,20 @@ export function ResetPasswordForm() {
         return
       }
 
-      // Simuler la réinitialisation (à remplacer par une vraie API)
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      // Mettre à jour le mot de passe avec Supabase
+      const { error: updateError } = await supabase.auth.updateUser({
+        password: password,
+      })
 
-      // TODO: Implémenter la réinitialisation du mot de passe
-      // const response = await fetch("/api/auth/reset-password", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ token: searchParams.get("token"), password }),
-      // })
+      if (updateError) {
+        setError(updateError.message)
+        return
+      }
 
-      // Rediriger vers la page de connexion
+      // Rediriger vers la page de connexion avec message de succès
       router.push("/login?reset=success")
-    } catch (err) {
+    } catch (err: any) {
+      console.error("Reset password error:", err)
       setError("Une erreur est survenue. Veuillez réessayer.")
     } finally {
       setIsLoading(false)

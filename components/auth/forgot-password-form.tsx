@@ -6,12 +6,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Field } from "@/components/ui/field"
 import { EnvelopeIcon, CheckCircleIcon } from "@phosphor-icons/react"
+import { createClient } from "@/lib/supabase/client"
 
 export function ForgotPasswordForm() {
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [error, setError] = useState("")
+  const supabase = createClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -32,18 +34,25 @@ export function ForgotPasswordForm() {
         return
       }
 
-      // Simuler l'envoi d'email (à remplacer par une vraie API)
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      // Envoyer l'email de réinitialisation avec Supabase
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      })
 
-      // TODO: Implémenter l'envoi d'email de réinitialisation
-      // const response = await fetch("/api/auth/forgot-password", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ email }),
-      // })
+      if (resetError) {
+        // Gérer les erreurs
+        if (resetError.message.includes("not found")) {
+          // Pour la sécurité, on ne dit pas si l'email existe ou non
+          setIsSuccess(true)
+        } else {
+          setError(resetError.message)
+        }
+        return
+      }
 
       setIsSuccess(true)
-    } catch (err) {
+    } catch (err: any) {
+      console.error("Reset password error:", err)
       setError("Une erreur est survenue. Veuillez réessayer.")
     } finally {
       setIsLoading(false)
