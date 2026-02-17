@@ -29,7 +29,7 @@ import {
   TrashIcon,
   ChartBarIcon,
   DownloadIcon,
-  FileJsonIcon,
+  FileJsIcon,
 } from "@phosphor-icons/react"
 import { ShopService } from "@/lib/services/shop-service"
 import type { Shop } from "@/app/api/shops/route"
@@ -185,7 +185,7 @@ export function ShopsList() {
                           Télécharger HTML
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => handleExportJSON(shop)}>
-                          <FileJsonIcon />
+                          <FileJsIcon />
                           Exporter JSON
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
