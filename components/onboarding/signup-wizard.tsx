@@ -10,6 +10,10 @@ import { Step3ShopInfo } from "./step3-shop-info"
 import { Step4AccountCreation } from "./step4-account-creation"
 import { ArrowLeftIcon, ArrowRightIcon, RocketLaunchIcon } from "@phosphor-icons/react"
 import { validatePasswordStrength } from "@/lib/password-validation"
+import { createClient } from "@/lib/supabase/client"
+import { SuccessDialog } from "./success-dialog"
+import { TemplateSelectorModal } from "@/components/shop-builder/template-selector-modal"
+import { ShopTemplate } from "@/lib/shop-templates"
 
 const steps = [
   {
@@ -36,8 +40,13 @@ const steps = [
 
 export function SignupWizard() {
   const router = useRouter()
+  const supabase = createClient()
   const [currentStep, setCurrentStep] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false)
+  const [showTemplateSelector, setShowTemplateSelector] = useState(false)
+  const [selectedTemplate, setSelectedTemplate] = useState<ShopTemplate | null>(null)
 
   // Step 1: Product Link
   const [productLink, setProductLink] = useState("")
@@ -104,52 +113,100 @@ export function SignupWizard() {
     if (!canProceedToNextStep()) return
 
     setIsLoading(true)
+    setError(null)
 
     try {
-      // TODO: Implement Supabase auth with all the onboarding data
-      const onboardingData = {
-        productLink,
-        brandTone,
-        brandColor,
-        shopName,
-        shopNiche,
-        fullName,
+      // Inscription avec Supabase
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email,
-        phone,
-        country,
         password,
-      }
-
-      console.log("Onboarding data:", onboardingData)
-
-      // Send welcome email
-      const emailResponse = await fetch("/api/auth/send-welcome-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          name: fullName,
-        }),
+        options: {
+          data: {
+            full_name: fullName,
+            phone,
+            country,
+            // Stocker les données d'onboarding
+            onboarding_data: {
+              product_link: productLink,
+              brand_tone: brandTone,
+              brand_color: brandColor,
+              shop_name: shopName,
+              shop_niche: shopNiche,
+            },
+          },
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
       })
 
-      if (!emailResponse.ok) {
-        console.error("Failed to send welcome email")
+      if (signUpError) {
+        if (signUpError.message.includes("already registered")) {
+          setError("Cet email est déjà utilisé. Essayez de vous connecter.")
+        } else {
+          setError(signUpError.message)
+        }
+        return
       }
 
-      // Simulate signup
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      // Si l'inscription nécessite une confirmation email
+      if (data.user && !data.session) {
+        setShowSuccessDialog(true)
+        return
+      }
 
-      // Redirect to dashboard
-      router.push("/dashboard")
-    } catch (error) {
+      // Si l'inscription réussit avec auto-connexion
+      if (data.session) {
+        // Afficher le sélecteur de template
+        setShowTemplateSelector(true)
+      }
+    } catch (error: any) {
       console.error("Signup error:", error)
+      setError("Une erreur est survenue lors de l'inscription")
     } finally {
       setIsLoading(false)
     }
   }
 
+  const handleSuccessDialogClose = () => {
+    setShowSuccessDialog(false)
+    router.push("/login")
+  }
+
+  const handleTemplateSelect = (template: ShopTemplate | null) => {
+    setSelectedTemplate(template)
+    setShowTemplateSelector(false)
+
+    // Encoder les données du template pour les passer au dashboard
+    const shopData = {
+      productLink,
+      brandTone,
+      brandColor,
+      shopName,
+      shopNiche,
+      template: template || undefined,
+    }
+
+    const encodedData = btoa(encodeURIComponent(JSON.stringify(shopData)))
+    router.push(`/dashboard?shopData=${encodedData}`)
+    router.refresh()
+  }
+
   return (
     <div className="w-full space-y-8">
+      {/* Success Dialog */}
+      <SuccessDialog open={showSuccessDialog} onClose={handleSuccessDialogClose} />
+
+      {/* Template Selector Modal */}
+      <TemplateSelectorModal
+        open={showTemplateSelector}
+        onClose={() => setShowTemplateSelector(false)}
+        onSelectTemplate={handleTemplateSelect}
+        productData={{
+          name: shopName,
+          category: shopNiche,
+          link: productLink,
+        }}
+      />
+
       {/* Stepper */}
       <Stepper steps={steps} currentStep={currentStep} />
 
@@ -195,6 +252,13 @@ export function SignupWizard() {
           />
         )}
       </div>
+
+      {/* Error Display */}
+      {error && (
+        <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/20">
+          <p className="text-sm text-destructive">{error}</p>
+        </div>
+      )}
 
       {/* Navigation Buttons */}
       <div className="flex items-center justify-between pt-6">

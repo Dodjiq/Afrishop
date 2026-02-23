@@ -23,6 +23,8 @@ import {
   CheckCircleIcon,
   XCircleIcon,
   AsteriskIcon,
+  EyeIcon,
+  EyeSlashIcon,
 } from "@phosphor-icons/react"
 import { validatePasswordStrength } from "@/lib/password-validation"
 import { createClient } from "@/lib/supabase/client"
@@ -51,6 +53,7 @@ export function SignupForm() {
     password: "",
   })
   const [passwordTouched, setPasswordTouched] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const passwordStrength = validatePasswordStrength(formData.password)
 
@@ -291,7 +294,7 @@ export function SignupForm() {
                   />
                   <Input
                     id="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="Créez un mot de passe fort"
                     value={formData.password}
                     onChange={(e) => {
@@ -299,10 +302,22 @@ export function SignupForm() {
                       if (!passwordTouched) setPasswordTouched(true)
                     }}
                     onBlur={() => setPasswordTouched(true)}
-                    className="pl-10"
+                    className="pl-10 pr-10"
                     required
                     disabled={isLoading}
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    disabled={isLoading}
+                  >
+                    {showPassword ? (
+                      <EyeSlashIcon size={18} />
+                    ) : (
+                      <EyeIcon size={18} />
+                    )}
+                  </button>
                 </div>
 
                 {/* Password strength indicator */}

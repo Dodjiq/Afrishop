@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Field } from "@/components/ui/field"
-import { LockIcon, CheckCircleIcon, WarningCircleIcon } from "@phosphor-icons/react"
+import { LockIcon, CheckCircleIcon, WarningCircleIcon, EyeIcon, EyeSlashIcon } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/client"
 
@@ -15,6 +15,8 @@ export function ResetPasswordForm() {
   const supabase = createClient()
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
@@ -93,14 +95,26 @@ export function ResetPasswordForm() {
           />
           <Input
             id="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="pl-10"
+            className="pl-10 pr-10"
             disabled={isLoading}
             required
           />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+            disabled={isLoading}
+          >
+            {showPassword ? (
+              <EyeSlashIcon size={18} />
+            ) : (
+              <EyeIcon size={18} />
+            )}
+          </button>
         </div>
 
         {/* Password Strength Indicator */}
@@ -164,14 +178,26 @@ export function ResetPasswordForm() {
           />
           <Input
             id="confirmPassword"
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             placeholder="••••••••"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="pl-10"
+            className="pl-10 pr-10"
             disabled={isLoading}
             required
           />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+            disabled={isLoading}
+          >
+            {showConfirmPassword ? (
+              <EyeSlashIcon size={18} />
+            ) : (
+              <EyeIcon size={18} />
+            )}
+          </button>
         </div>
         {confirmPassword && password !== confirmPassword && (
           <p className="text-xs text-red-500 mt-1 flex items-center gap-1">

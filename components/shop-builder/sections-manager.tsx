@@ -41,7 +41,7 @@ function SortableSection({ section, index, onEdit, onDelete }: any) {
     setNodeRef,
     transform,
     transition,
-  } = useSortable({ id: section.id })
+  } = useSortable({ id: section.uniqueId || section.id })
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -121,8 +121,12 @@ export function SectionsManager({
     const { active, over } = event
 
     if (over && active.id !== over.id) {
-      const oldIndex = sections.findIndex((s) => s.id === active.id)
-      const newIndex = sections.findIndex((s) => s.id === over.id)
+      const oldIndex = sections.findIndex(
+        (s) => (s.uniqueId || s.id) === active.id
+      )
+      const newIndex = sections.findIndex(
+        (s) => (s.uniqueId || s.id) === over.id
+      )
 
       setSections(arrayMove(sections, oldIndex, newIndex))
     }
@@ -173,12 +177,12 @@ export function SectionsManager({
         onDragEnd={handleDragEnd}
       >
         <SortableContext
-          items={sections.map((s) => s.id)}
+          items={sections.map((s) => s.uniqueId || s.id)}
           strategy={verticalListSortingStrategy}
         >
           {sections.map((section, index) => (
             <SortableSection
-              key={section.id}
+              key={section.uniqueId || section.id}
               section={section}
               index={index}
               onEdit={handleEdit}

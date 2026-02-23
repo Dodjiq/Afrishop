@@ -19,8 +19,11 @@ export function SectionRenderer({
   shopConfig,
 }: SectionRendererProps) {
   const renderSection = (section: any, index: number) => {
+    // Utiliser uniqueId si disponible, sinon fallback sur id + index
+    const uniqueKey = section.uniqueId || `${section.id}-${index}`
+
     const commonProps = {
-      key: section.id || index,
+      key: uniqueKey,
       section,
       productData,
       shopConfig,

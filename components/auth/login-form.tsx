@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { EnvelopeIcon, LockIcon, SignInIcon } from "@phosphor-icons/react"
+import { EnvelopeIcon, LockIcon, SignInIcon, EyeIcon, EyeSlashIcon } from "@phosphor-icons/react"
 import { createClient } from "@/lib/supabase/client"
 
 export function LoginForm() {
@@ -16,6 +16,7 @@ export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   async function onSubmit(e: React.FormEvent) {
@@ -90,14 +91,26 @@ export function LoginForm() {
                 />
                 <Input
                   id="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 pr-10"
                   required
                   disabled={isLoading}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  disabled={isLoading}
+                >
+                  {showPassword ? (
+                    <EyeSlashIcon size={18} />
+                  ) : (
+                    <EyeIcon size={18} />
+                  )}
+                </button>
               </div>
             </Field>
           </FieldGroup>

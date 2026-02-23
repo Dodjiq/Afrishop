@@ -13,42 +13,42 @@ import { useInView } from "@/hooks/use-in-view"
 
 const journey = [
   {
-    year: "2019",
-    title: "Départ difficile",
-    description: "Arrêt scolaire en 3ème suite à des problèmes de santé",
-    icon: HeartIcon,
-  },
-  {
-    year: "2020",
-    title: "Auto-formation",
-    description: "Apprentissage du développement web via YouTube et ressources gratuites",
+    year: "2017",
+    title: "Études universitaires",
+    description: "Étudiant à l'université en Côte d'Ivoire, à la recherche d'opportunités",
     icon: GraduationCapIcon,
   },
   {
-    year: "2021",
-    title: "Premier CDI",
-    description: "Décroché mon premier contrat à durée indéterminée comme développeur",
+    year: "2018",
+    title: "Découverte du e-commerce",
+    description: "Initiation au commerce en ligne et premières ventes",
     icon: LaptopIcon,
   },
   {
-    year: "2022-2023",
-    title: "Évolution rapide",
-    description: "Création de sites web, prestations de service, revenus à 2000€/mois",
+    year: "2019-2020",
+    title: "Croissance progressive",
+    description: "Développement de sa boutique en ligne et apprentissage du marketing digital",
     icon: TrendUpIcon,
   },
   {
-    year: "Aujourd'hui",
-    title: "E-commerce & SaaS",
-    description: "3 millions FCFA/mois en e-commerce + création d'AfriShop",
+    year: "2021-2023",
+    title: "Expansion massive",
+    description: "Scaling de son activité e-commerce avec des stratégies avancées",
     icon: RocketLaunchIcon,
+  },
+  {
+    year: "Aujourd'hui",
+    title: "Succès confirmé",
+    description: "Plus de 65 millions FCFA/mois en chiffre d'affaires e-commerce",
+    icon: CheckCircleIcon,
   },
 ]
 
 const stats = [
-  { value: "22 ans", label: "Âge" },
-  { value: "2000€+", label: "Revenus mensuels" },
-  { value: "3M FCFA", label: "CA e-commerce/mois" },
-  { value: "100%", label: "Autodidacte" },
+  { value: "65M FCFA", label: "CA mensuel" },
+  { value: "800M FCFA", label: "CA annuel" },
+  { value: "🇨🇮", label: "Côte d'Ivoire" },
+  { value: "E-commerce", label: "Secteur" },
 ]
 
 export function AboutSection() {
@@ -69,11 +69,11 @@ export function AboutSection() {
           {/* Section Header */}
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-              Mon histoire
+              L'histoire de Badro Mous
             </h2>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              De l'abandon scolaire au succès entrepreneurial : comment j'ai transformé
-              les obstacles en opportunités
+              De simple étudiant à e-commerçant à succès : comment il génère 65 millions
+              de FCFA par mois en Côte d'Ivoire
             </p>
           </div>
 
@@ -96,38 +96,40 @@ export function AboutSection() {
             <CardContent className="p-8 md:p-12">
               <div className="space-y-4 text-base leading-relaxed md:text-lg">
                 <p>
-                  Je m'appelle <span className="font-semibold text-foreground">Dodji</span>,
-                  j'ai <span className="font-semibold text-primary">22 ans</span> et je vis au{" "}
-                  <span className="font-semibold text-foreground">🇹🇬 Togo</span>.
+                  <span className="font-semibold text-foreground">Badro Mous</span>, un jeune
+                  ivoirien, était étudiant à l'université en{" "}
+                  <span className="font-semibold text-foreground">🇨🇮 Côte d'Ivoire</span>{" "}
+                  lorsqu'il a découvert le potentiel du e-commerce.
                 </p>
                 <p>
-                  Mon parcours n'a pas été facile. J'ai dû{" "}
-                  <span className="font-semibold">arrêter l'école en classe de 3ème</span>{" "}
-                  à cause de problèmes de santé. Beaucoup auraient abandonné leurs rêves,
-                  mais moi, j'ai décidé de me battre.
+                  Comme beaucoup d'étudiants, il cherchait un moyen de{" "}
+                  <span className="font-semibold">générer des revenus</span> tout en poursuivant
+                  ses études. C'est en 2018 qu'il a fait ses premiers pas dans le commerce en ligne,
+                  sans savoir que cela allait changer sa vie.
                 </p>
                 <p>
-                  Grâce à{" "}
-                  <span className="font-semibold text-primary">YouTube et Internet</span>,
-                  j'ai appris le développement web tout seul. Chaque jour, je regardais
-                  des tutoriels, je pratiquais, j'échouais, et je recommençais.
+                  Avec de la{" "}
+                  <span className="font-semibold text-primary">détermination et de la persévérance</span>,
+                  Badro a appris les techniques du marketing digital, la gestion de stock, et surtout,
+                  comment satisfaire ses clients. Il a fréquenté des formations en ligne, étudié les
+                  stratégies des meilleurs e-commerçants, et appliqué ce qu'il apprenait.
                 </p>
                 <p>
-                  Cette persévérance m'a permis de décrocher{" "}
-                  <span className="font-semibold">mon premier CDI</span>, puis un second.
-                  Aujourd'hui, grâce à la création de sites web et aux prestations de service,
-                  je gagne plus de <span className="font-semibold text-primary">2000€ par mois</span>.
+                  Les résultats ont dépassé toutes ses espérances. Aujourd'hui, Badro génère{" "}
+                  <span className="font-semibold text-primary">plus de 65 millions de FCFA par mois</span>,
+                  soit environ <span className="font-semibold text-primary">800 millions de FCFA par an</span>{" "}
+                  grâce à son activité e-commerce.
                 </p>
                 <p>
-                  Je fais également de l'e-commerce avec un chiffre d'affaires mensuel de{" "}
-                  <span className="font-semibold text-primary">3 millions de FCFA</span>.
+                  Son secret ? <span className="font-semibold">La formation continue, le travail acharné,
+                  et l'utilisation des bons outils</span> pour automatiser et optimiser son business.
                 </p>
                 <p className="flex items-start gap-3 rounded-lg border border-primary/30 bg-primary/10 p-4">
                   <CheckCircleIcon size={24} weight="fill" className="mt-1 shrink-0 text-primary" />
                   <span className="font-medium">
-                    J'ai créé <span className="text-primary">AfriShop</span> pour partager
-                    cette opportunité avec d'autres entrepreneurs africains qui, comme moi,
-                    veulent réussir malgré les obstacles.
+                    L'histoire de Badro prouve qu'avec <span className="text-primary">AfriShop</span>,
+                    vous aussi vous pouvez bâtir un empire e-commerce en Afrique. Les outils sont là,
+                    il ne vous reste plus qu'à passer à l'action.
                   </span>
                 </p>
               </div>
@@ -136,7 +138,7 @@ export function AboutSection() {
 
           {/* Journey Timeline */}
           <div>
-            <h3 className="mb-8 text-center text-2xl font-bold">Mon parcours</h3>
+            <h3 className="mb-8 text-center text-2xl font-bold">Son parcours</h3>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {journey.map((step, index) => {
                 const Icon = step.icon
@@ -168,10 +170,10 @@ export function AboutSection() {
           {/* Call to Action */}
           <div className="mt-12 text-center">
             <p className="text-lg font-medium text-muted-foreground">
-              Si j'ai réussi sans diplôme, depuis le Togo, vous pouvez le faire aussi.
+              Si Badro a réussi à générer 65 millions par mois, vous pouvez le faire aussi.
             </p>
             <p className="mt-2 text-xl font-bold text-foreground">
-              Commençons votre histoire de succès ensemble. 🚀
+              Votre histoire de succès commence ici avec AfriShop. 🚀
             </p>
           </div>
         </div>
