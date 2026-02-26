@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ProductImport } from "@/components/shop-builder/product-import"
 import { ProductGeneration } from "@/components/shop-builder/product-generation"
 import { ShopCustomizer } from "@/components/shop-builder/shop-customizer"
@@ -14,12 +14,43 @@ export default function CreateShopPage() {
   const [productData, setProductData] = useState<any>(null)
   const [generatedProducts, setGeneratedProducts] = useState<any[]>([])
   const [selectedTemplate, setSelectedTemplate] = useState<ShopTemplate | null>(null)
-  const [shopConfig, setShopConfig] = useState({
+  const [shopConfig, setShopConfig] = useState<any>({
     brandColor: "#ea580c",
     brandTone: "modern",
     shopName: "",
     sections: [],
   })
+
+  // Créer un shop temporaire pour avoir un shopId
+  useEffect(() => {
+    const createTemporaryShop = async () => {
+      if (shopConfig.shopId || !selectedTemplate) return
+
+      try {
+        const response = await fetch("/api/shops/save", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            shopName: productData?.name || "Nouvelle boutique",
+            brandColor: shopConfig.brandColor,
+            brandTone: shopConfig.brandTone,
+            sections: shopConfig.sections,
+          }),
+        })
+
+        const data = await response.json()
+
+        if (data.success && data.shopId) {
+          setShopConfig((prev: any) => ({ ...prev, shopId: data.shopId }))
+          console.log("✅ Shop créé avec ID:", data.shopId)
+        }
+      } catch (error) {
+        console.error("Erreur création shop:", error)
+      }
+    }
+
+    createTemporaryShop()
+  }, [selectedTemplate, productData?.name, shopConfig])
 
   // Gérer la sélection de template
   const handleTemplateSelect = (template: ShopTemplate) => {

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -32,6 +32,53 @@ export function ShopCustomizer({
   onNext,
 }: ShopCustomizerProps) {
   const [activeTab, setActiveTab] = useState("sections")
+  const [pagesCreated, setPagesCreated] = useState(false)
+  const [isCreatingPages, setIsCreatingPages] = useState(false)
+
+  // Créer les 4 pages par défaut au chargement
+  useEffect(() => {
+    const createDefaultPages = async () => {
+      if (pagesCreated || isCreatingPages || !shopConfig.shopId || !productData) return
+
+      setIsCreatingPages(true)
+      try {
+        console.log("🚀 Création des 4 pages par défaut...")
+
+        const response = await fetch("/api/pages", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            shopId: shopConfig.shopId,
+            productData: {
+              name: productData.name,
+              description: productData.description,
+              price: productData.price,
+              currency: productData.currency || "USD",
+              category: productData.category,
+              images: productData.images,
+            },
+            brandColor: shopConfig.brandColor,
+            createDefaults: true,
+          }),
+        })
+
+        const data = await response.json()
+
+        if (data.success) {
+          console.log(`✅ ${data.count} pages créées:`, data.pages.map((p: any) => p.name).join(", "))
+          setPagesCreated(true)
+        } else {
+          console.error("❌ Erreur création pages:", data.error)
+        }
+      } catch (error) {
+        console.error("❌ Erreur création pages:", error)
+      } finally {
+        setIsCreatingPages(false)
+      }
+    }
+
+    createDefaultPages()
+  }, [shopConfig.shopId, productData, pagesCreated, isCreatingPages])
 
   return (
     <div className="space-y-6">

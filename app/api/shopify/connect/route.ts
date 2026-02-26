@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.log(`✅ Identifiants valides pour: ${verification.shopName}`)
+    console.log(`✅ Identifiants valides pour: ${verification.shop?.name || shopDomain}`)
 
     // Enregistrer les identifiants dans le shop
     if (shopId) {
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
         .update({
           shopify_domain: shopDomain,
           shopify_access_token: accessToken,
-          shopify_shop_name: verification.shopName,
+          shopify_shop_name: verification.shop?.name || shopDomain,
           updated_at: new Date().toISOString(),
         })
         .eq("id", shopId)
@@ -70,11 +70,13 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const shopName = verification.shop?.name || shopDomain
+
     return NextResponse.json({
       success: true,
-      shopName: verification.shopName,
+      shopName,
       shopDomain,
-      message: `Connecté avec succès à ${verification.shopName}`,
+      message: `Connecté avec succès à ${shopName}`,
     })
   } catch (error: any) {
     console.error("Shopify connect error:", error)

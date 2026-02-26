@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
-import {
-  createShopifyProductsBatch,
-  ShopifyCredentials,
-} from "@/lib/services/shopify-products"
+import { createShopifyProductsBatch } from "@/lib/services/shopify-products"
 import { GeneratedProduct } from "@/lib/services/product-generator"
+import type { ShopifyCredentials } from "@/lib/services/shopify-client"
 
 /**
  * POST /api/shopify/sync

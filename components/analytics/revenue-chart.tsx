@@ -56,7 +56,7 @@ export function RevenueChart() {
                 border: "1px solid hsl(var(--border))",
                 borderRadius: "8px",
               }}
-              formatter={(value: number) => [`${value.toLocaleString()} FCFA`, "Revenu"]}
+              formatter={(value: number | undefined) => value ? [`${value.toLocaleString()} FCFA`, "Revenu"] : ["0 FCFA", "Revenu"]}
             />
             <Area
               type="monotone"

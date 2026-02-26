@@ -20,8 +20,8 @@ export function useAutoSave<T>({
   const [saveError, setSaveError] = useState<string | null>(null)
 
   const dataRef = useRef(data)
-  const debounceTimerRef = useRef<NodeJS.Timeout>()
-  const intervalTimerRef = useRef<NodeJS.Timeout>()
+  const debounceTimerRef = useRef<NodeJS.Timeout | undefined>(undefined)
+  const intervalTimerRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
   // Mettre à jour la ref quand data change
   useEffect(() => {

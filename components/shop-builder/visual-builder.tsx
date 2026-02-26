@@ -18,6 +18,8 @@ import {
   CornersOutIcon,
   CornersInIcon,
   ClockCounterClockwiseIcon,
+  CaretDownIcon,
+  FileIcon,
 } from "@phosphor-icons/react"
 import {
   DndContext,
@@ -37,6 +39,13 @@ import { VersionHistory } from "./version-history"
 import { useHistory } from "@/hooks/use-history"
 import { useKeyboardShortcuts, BUILDER_SHORTCUTS } from "@/hooks/use-keyboard-shortcuts"
 import { useAutoSave } from "@/hooks/use-auto-save"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 interface VisualBuilderProps {
   productData: any
@@ -63,6 +72,11 @@ export function VisualBuilder({
   const [showDashboardSidebar, setShowDashboardSidebar] = useState(true)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showVersionHistory, setShowVersionHistory] = useState(false)
+
+  // Pages management
+  const [pages, setPages] = useState<any[]>([])
+  const [currentPageId, setCurrentPageId] = useState<string | null>(null)
+  const [isLoadingPages, setIsLoadingPages] = useState(true)
 
   // Masquer/afficher la sidebar du dashboard parent
   useEffect(() => {
@@ -113,7 +127,40 @@ export function VisualBuilder({
     }
   }
 
-  // Historique avec undo/redo
+  // Charger les pages du shop
+  useEffect(() => {
+    const loadPages = async () => {
+      if (!shopConfig.shopId) return
+
+      setIsLoadingPages(true)
+      try {
+        const response = await fetch(`/api/pages?shopId=${shopConfig.shopId}`)
+        const data = await response.json()
+
+        if (data.success && data.pages) {
+          setPages(data.pages)
+          // Sélectionner la page d'accueil par défaut
+          const homePage = data.pages.find((p: any) => p.is_home)
+          if (homePage) {
+            setCurrentPageId(homePage.id)
+          } else if (data.pages.length > 0) {
+            setCurrentPageId(data.pages[0].id)
+          }
+        }
+      } catch (error) {
+        console.error("Erreur chargement pages:", error)
+      } finally {
+        setIsLoadingPages(false)
+      }
+    }
+
+    loadPages()
+  }, [shopConfig.shopId])
+
+  // Obtenir la page courante
+  const currentPage = pages.find((p) => p.id === currentPageId)
+
+  // Historique avec undo/redo (utilise les sections de la page courante)
   const {
     state: sections,
     setState: setSections,
@@ -121,7 +168,7 @@ export function VisualBuilder({
     redo,
     canUndo,
     canRedo,
-  } = useHistory<any[]>(shopConfig.sections || [])
+  } = useHistory<any[]>(currentPage?.sections || shopConfig.sections || [])
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -138,9 +185,35 @@ export function VisualBuilder({
     mobile: "375px",
   }
 
-  const handleSectionsUpdate = (newSections: any[]) => {
+  const handleSectionsUpdate = async (newSections: any[]) => {
     setSections(newSections)
-    setShopConfig({ ...shopConfig, sections: newSections })
+
+    // Si on a une page courante, mettre à jour ses sections
+    if (currentPageId && currentPage) {
+      try {
+        const response = await fetch(`/api/pages/${currentPageId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sections: newSections,
+          }),
+        })
+
+        if (response.ok) {
+          // Mettre à jour l'état local des pages
+          setPages((prevPages) =>
+            prevPages.map((p) =>
+              p.id === currentPageId ? { ...p, sections: newSections } : p
+            )
+          )
+        }
+      } catch (error) {
+        console.error("Erreur mise à jour page:", error)
+      }
+    } else {
+      // Fallback: mettre à jour shopConfig (ancien comportement)
+      setShopConfig({ ...shopConfig, sections: newSections })
+    }
   }
 
   // Auto-save
@@ -343,6 +416,35 @@ export function VisualBuilder({
             </div>
           </div>
 
+          {/* Page Selector */}
+          {pages.length > 0 && (
+            <div className="flex items-center gap-2">
+              <FileIcon size={16} className="text-muted-foreground" />
+              <Select
+                value={currentPageId || ""}
+                onValueChange={(value) => setCurrentPageId(value)}
+              >
+                <SelectTrigger className="w-[200px] h-9">
+                  <SelectValue placeholder="Sélectionner une page">
+                    {currentPage?.name || "Sélectionner une page"}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {pages.map((page) => (
+                    <SelectItem key={page.id} value={page.id}>
+                      <div className="flex items-center gap-2">
+                        <span>{page.name}</span>
+                        {page.is_home && (
+                          <span className="text-xs text-muted-foreground">(Accueil)</span>
+                        )}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
           {/* Device Mode Toggle */}
           <div className="flex items-center gap-2 bg-muted p-1 rounded-lg">
             <Button
@@ -515,8 +617,15 @@ export function VisualBuilder({
             <div className="w-80 border-r bg-card overflow-hidden transition-all duration-300">
               <WidgetsLibraryPanel
                 productData={productData}
+                currentSections={sections}
                 onAddMultipleWidgets={(widgets) => {
-                  const newSections = [...sections, ...widgets]
+                  // Si les widgets sont les mêmes sections (réordonnées), on remplace
+                  // Sinon on ajoute
+                  const isReorder = widgets.every((w: any) =>
+                    sections.some((s: any) => s.uniqueId === w.uniqueId || s.id === w.id)
+                  )
+
+                  const newSections = isReorder ? widgets : [...sections, ...widgets]
                   handleSectionsUpdate(newSections)
                 }}
               />

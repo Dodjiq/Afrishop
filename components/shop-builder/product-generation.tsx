@@ -46,6 +46,37 @@ export function ProductGeneration({
       setCurrentStep("Initialisation de la génération IA...")
       setProgress(10)
 
+      // ÉTAPE 1: Générer le layout optimisé de sections
+      setCurrentStep("Sélection intelligente des sections de la boutique...")
+      setProgress(15)
+
+      const sectionsResponse = await fetch("/api/sections/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productName: baseProduct.name,
+          productDescription: baseProduct.description,
+          productCategory: baseProduct.category,
+          productPrice: baseProduct.price,
+          brandTone: "modern",
+          template: "Moderne",
+          shopGoal: "conversion",
+          shopId,
+        }),
+      })
+
+      if (sectionsResponse.ok) {
+        const sectionsData = await sectionsResponse.json()
+        console.log(`✅ ${sectionsData.layout.sections.length} sections sélectionnées par l'IA`)
+      } else {
+        console.warn("⚠️ Génération de sections échouée, utilisation du template par défaut")
+      }
+
+      setProgress(25)
+
+      // ÉTAPE 2: Générer les 20 variations de produits
+      setCurrentStep("Génération des 20 variations de produits...")
+
       const response = await fetch("/api/products/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -67,8 +98,8 @@ export function ProductGeneration({
         throw new Error(errorData.error || "Erreur lors de la génération")
       }
 
-      setProgress(30)
-      setCurrentStep("Génération des variations avec Claude AI...")
+      setProgress(40)
+      setCurrentStep("Création des variantes avec Claude AI...")
 
       // Simulation du progrès pendant la génération
       const progressInterval = setInterval(() => {

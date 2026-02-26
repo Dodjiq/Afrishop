@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Windows invalid files
+nul
+
+# Supabase temp files
+supabase/.temp/

@@ -65,9 +65,10 @@ interface WidgetsLibraryPanelProps {
   onAddWidget?: (widget: any) => void
   onAddMultipleWidgets?: (widgets: any[]) => void
   productData?: any
+  currentSections?: any[]
 }
 
-export function WidgetsLibraryPanel({ onAddWidget, onAddMultipleWidgets, productData }: WidgetsLibraryPanelProps) {
+export function WidgetsLibraryPanel({ onAddWidget, onAddMultipleWidgets, productData, currentSections = [] }: WidgetsLibraryPanelProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
 
@@ -436,11 +437,12 @@ export function WidgetsLibraryPanel({ onAddWidget, onAddMultipleWidgets, product
   return (
     <div className="h-full flex flex-col">
       {/* AI Assistant */}
-      {productData && onAddMultipleWidgets && (
+      {onAddMultipleWidgets && (
         <AIAssistantPanel
           productData={productData}
+          currentSections={currentSections}
           availableWidgets={widgets}
-          onAddSuggestions={onAddMultipleWidgets}
+          onReorderSuggestions={onAddMultipleWidgets}
         />
       )}
 

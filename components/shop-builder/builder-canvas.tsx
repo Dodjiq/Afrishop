@@ -147,12 +147,12 @@ function SortableSection({
     <div
       ref={setNodeRef}
       style={style}
-      className={`relative group ${isSelected ? "ring-2 ring-primary ring-offset-2" : ""}`}
+      className={`relative group ${isSelected ? "ring-2 ring-primary shadow-lg" : ""}`}
     >
       {/* Section Content */}
       <div
         onClick={onSelect}
-        className={`cursor-pointer hover:outline hover:outline-2 hover:outline-primary/50 transition-all ${section.style?.customClass || ""}`}
+        className={`cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all duration-200 ${section.style?.customClass || ""}`}
         id={section.style?.sectionId || undefined}
         style={{
           paddingTop,
@@ -571,32 +571,35 @@ function SortableSection({
         </div>
       </div>
 
-      {/* Toolbar on Hover/Selection */}
-      <div className={`absolute -top-12 left-1/2 -translate-x-1/2 transition-opacity ${isSelected || "opacity-0 group-hover:opacity-100"}`}>
-        <div className="bg-primary text-primary-foreground shadow-xl rounded-lg flex items-center gap-1 p-1">
+      {/* Toolbar on Hover/Selection - Design amélioré */}
+      <div className={`absolute -top-14 left-1/2 -translate-x-1/2 transition-all duration-200 z-50 ${isSelected || "opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0"}`}>
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-2xl rounded-xl flex items-center gap-1 p-1.5 backdrop-blur-sm">
           <button
             {...attributes}
             {...listeners}
-            className="p-2 hover:bg-primary-foreground/20 rounded cursor-grab active:cursor-grabbing"
+            className="p-2.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg cursor-grab active:cursor-grabbing transition-colors"
+            title="Déplacer"
           >
-            <DotsThreeVerticalIcon size={16} weight="bold" />
+            <DotsThreeVerticalIcon size={18} weight="bold" className="text-gray-700 dark:text-gray-300" />
           </button>
-          <div className="w-px h-6 bg-primary-foreground/20" />
+          <div className="w-px h-6 bg-gray-200 dark:bg-gray-700" />
           <Button
             size="sm"
             variant="ghost"
             onClick={onDuplicate}
-            className="h-8 px-2 hover:bg-primary-foreground/20"
+            className="h-9 px-3 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+            title="Dupliquer"
           >
-            <CopyIcon size={16} />
+            <CopyIcon size={18} />
           </Button>
           <Button
             size="sm"
             variant="ghost"
             onClick={onDelete}
-            className="h-8 px-2 hover:bg-destructive"
+            className="h-9 px-3 hover:bg-red-50 dark:hover:bg-red-900/30 hover:text-red-600 text-gray-700 dark:text-gray-300"
+            title="Supprimer"
           >
-            <TrashIcon size={16} />
+            <TrashIcon size={18} />
           </Button>
         </div>
       </div>

@@ -270,44 +270,6 @@ export function PropertiesPanel({
         </div>
       </div>
 
-      {/* Device Mode Selector - Style Elementor */}
-      <div className="px-4 py-3 border-b bg-muted/30 shrink-0">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-muted-foreground mr-2">Appareil :</span>
-          <div className="flex items-center gap-1 bg-background p-1 rounded-lg flex-1">
-            <Button
-              variant={activeDevice === "desktop" ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setActiveDevice("desktop")}
-              className="flex-1 gap-1 h-7"
-              title="Desktop"
-            >
-              <MonitorIcon size={14} weight={activeDevice === "desktop" ? "fill" : "regular"} />
-              <span className="hidden sm:inline text-xs">Desktop</span>
-            </Button>
-            <Button
-              variant={activeDevice === "tablet" ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setActiveDevice("tablet")}
-              className="flex-1 gap-1 h-7"
-              title="Tablet"
-            >
-              <DeviceTabletIcon size={14} weight={activeDevice === "tablet" ? "fill" : "regular"} />
-              <span className="hidden sm:inline text-xs">Tablet</span>
-            </Button>
-            <Button
-              variant={activeDevice === "mobile" ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setActiveDevice("mobile")}
-              className="flex-1 gap-1 h-7"
-              title="Mobile"
-            >
-              <DeviceMobileIcon size={14} weight={activeDevice === "mobile" ? "fill" : "regular"} />
-              <span className="hidden sm:inline text-xs">Mobile</span>
-            </Button>
-          </div>
-        </div>
-      </div>
 
       {/* Properties Tabs */}
       <div className="flex-1 overflow-y-auto">
@@ -920,15 +882,46 @@ export function PropertiesPanel({
           <TabsContent value="style" className="p-4 space-y-4">
             {/* Spacing */}
             <div className="space-y-3">
-              <h4 className="font-semibold text-sm">Espacement</h4>
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold text-sm">Espacement</h4>
+                <div className="flex items-center gap-0.5 bg-muted/50 p-0.5 rounded-md">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setActiveDevice("desktop")}
+                    className={`h-6 w-6 ${activeDevice === "desktop" ? "bg-background shadow-sm" : ""}`}
+                    title="Desktop"
+                  >
+                    <MonitorIcon size={14} weight={activeDevice === "desktop" ? "fill" : "regular"} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setActiveDevice("tablet")}
+                    className={`h-6 w-6 ${activeDevice === "tablet" ? "bg-background shadow-sm" : ""}`}
+                    title="Tablet"
+                  >
+                    <DeviceTabletIcon size={14} weight={activeDevice === "tablet" ? "fill" : "regular"} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setActiveDevice("mobile")}
+                    className={`h-6 w-6 ${activeDevice === "mobile" ? "bg-background shadow-sm" : ""}`}
+                    title="Mobile"
+                  >
+                    <DeviceMobileIcon size={14} weight={activeDevice === "mobile" ? "fill" : "regular"} />
+                  </Button>
+                </div>
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 <Field>
                   <FieldLabel htmlFor="paddingTop">Padding haut</FieldLabel>
                   <select
                     id="paddingTop"
                     className="w-full h-9 px-3 rounded-md border bg-background text-sm"
-                    value={localSection?.style?.paddingTop || "normal"}
-                    onChange={(e) => handleChange("style.paddingTop", e.target.value)}
+                    value={getResponsiveValue("style.paddingTop", "normal")}
+                    onChange={(e) => handleChange("style.paddingTop", e.target.value, true)}
                   >
                     <option value="none">Aucun</option>
                     <option value="small">Petit (2rem)</option>
@@ -942,8 +935,8 @@ export function PropertiesPanel({
                   <select
                     id="paddingBottom"
                     className="w-full h-9 px-3 rounded-md border bg-background text-sm"
-                    value={localSection?.style?.paddingBottom || "normal"}
-                    onChange={(e) => handleChange("style.paddingBottom", e.target.value)}
+                    value={getResponsiveValue("style.paddingBottom", "normal")}
+                    onChange={(e) => handleChange("style.paddingBottom", e.target.value, true)}
                   >
                     <option value="none">Aucun</option>
                     <option value="small">Petit (2rem)</option>
@@ -956,7 +949,38 @@ export function PropertiesPanel({
 
             {/* Background */}
             <div className="space-y-3">
-              <h4 className="font-semibold text-sm">Arrière-plan</h4>
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold text-sm">Arrière-plan</h4>
+                <div className="flex items-center gap-0.5 bg-muted/50 p-0.5 rounded-md">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setActiveDevice("desktop")}
+                    className={`h-6 w-6 ${activeDevice === "desktop" ? "bg-background shadow-sm" : ""}`}
+                    title="Desktop"
+                  >
+                    <MonitorIcon size={14} weight={activeDevice === "desktop" ? "fill" : "regular"} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setActiveDevice("tablet")}
+                    className={`h-6 w-6 ${activeDevice === "tablet" ? "bg-background shadow-sm" : ""}`}
+                    title="Tablet"
+                  >
+                    <DeviceTabletIcon size={14} weight={activeDevice === "tablet" ? "fill" : "regular"} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setActiveDevice("mobile")}
+                    className={`h-6 w-6 ${activeDevice === "mobile" ? "bg-background shadow-sm" : ""}`}
+                    title="Mobile"
+                  >
+                    <DeviceMobileIcon size={14} weight={activeDevice === "mobile" ? "fill" : "regular"} />
+                  </Button>
+                </div>
+              </div>
               <Field>
                 <FieldLabel htmlFor="backgroundColor">Couleur de fond</FieldLabel>
                 <select

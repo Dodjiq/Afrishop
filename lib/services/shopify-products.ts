@@ -75,7 +75,6 @@ export async function createShopifyProduct(
     const response = await client.post({
       path: "products",
       data: { product: shopifyProduct },
-      type: "application/json",
     })
 
     if (response.body && typeof response.body === "object" && "product" in response.body) {
@@ -169,7 +168,6 @@ export async function updateShopifyProduct(
     await client.put({
       path: `products/${productId}`,
       data: { product: shopifyUpdates },
-      type: "application/json",
     })
 
     return { success: true }
@@ -284,8 +282,7 @@ export async function publishShopifyProduct(
         .put({
           path: `products/${productId}`,
           data: { product: { status: "active" } },
-          type: "application/json",
-        })
+            })
         .then(() => ({ success: true }))
         .catch((error: any) => ({
           success: false,

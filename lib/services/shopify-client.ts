@@ -4,18 +4,25 @@
  */
 
 import "@shopify/shopify-api/adapters/node"
-import { shopifyApi, LATEST_API_VERSION, Session } from "@shopify/shopify-api"
+import { shopifyApi, Session, ApiVersion } from "@shopify/shopify-api"
 
-// Configuration Shopify
-const shopify = shopifyApi({
-  apiKey: process.env.SHOPIFY_API_KEY || "",
-  apiSecretKey: process.env.SHOPIFY_API_SECRET || "",
-  scopes: ["read_products", "write_products", "read_orders", "write_orders"],
-  hostName: process.env.SHOPIFY_HOST_NAME || "localhost",
-  apiVersion: LATEST_API_VERSION,
-  isEmbeddedApp: false,
-  isCustomStoreApp: true, // Pour les custom apps
-})
+// Configuration Shopify - Only initialize if credentials are available
+let shopifyInstance: ReturnType<typeof shopifyApi> | null = null
+
+function getShopify() {
+  if (!shopifyInstance && process.env.SHOPIFY_API_KEY && process.env.SHOPIFY_API_SECRET) {
+    shopifyInstance = shopifyApi({
+      apiKey: process.env.SHOPIFY_API_KEY,
+      apiSecretKey: process.env.SHOPIFY_API_SECRET,
+      scopes: ["read_products", "write_products", "read_orders", "write_orders"],
+      hostName: process.env.SHOPIFY_HOST_NAME || "localhost",
+      apiVersion: ApiVersion.October24,
+      isEmbeddedApp: false,
+      isCustomStoreApp: true,
+    })
+  }
+  return shopifyInstance
+}
 
 export interface ShopifyCredentials {
   shopDomain: string // mystore.myshopify.com
@@ -26,16 +33,21 @@ export interface ShopifyCredentials {
  * Crée un client Shopify REST API
  */
 export function createShopifyClient(credentials: ShopifyCredentials) {
+  const shopify = getShopify()
+  if (!shopify) {
+    throw new Error("Shopify API not configured. Please set SHOPIFY_API_KEY and SHOPIFY_API_SECRET.")
+  }
+
   const { shopDomain, accessToken } = credentials
 
-  const session: Session = {
+  const session = new Session({
     id: `offline_${shopDomain}`,
     shop: shopDomain,
     state: "offline",
     isOnline: false,
     accessToken,
     scope: "read_products,write_products,read_orders,write_orders",
-  }
+  })
 
   const client = new shopify.clients.Rest({ session })
 
@@ -46,16 +58,21 @@ export function createShopifyClient(credentials: ShopifyCredentials) {
  * Crée un client Shopify GraphQL
  */
 export function createShopifyGraphQLClient(credentials: ShopifyCredentials) {
+  const shopify = getShopify()
+  if (!shopify) {
+    throw new Error("Shopify API not configured. Please set SHOPIFY_API_KEY and SHOPIFY_API_SECRET.")
+  }
+
   const { shopDomain, accessToken } = credentials
 
-  const session: Session = {
+  const session = new Session({
     id: `offline_${shopDomain}`,
     shop: shopDomain,
     state: "offline",
     isOnline: false,
     accessToken,
     scope: "read_products,write_products,read_orders,write_orders",
-  }
+  })
 
   const client = new shopify.clients.Graphql({ session })
 
@@ -95,4 +112,4 @@ export async function verifyShopifyCredentials(
   }
 }
 
-export { shopify }
+export { getShopify }

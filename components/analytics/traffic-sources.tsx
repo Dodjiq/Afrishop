@@ -38,7 +38,7 @@ export function TrafficSources() {
                     dominantBaseline="central"
                     style={{ fontSize: '14px', fontWeight: '600' }}
                   >
-                    {`${name} ${(percent * 100).toFixed(0)}%`}
+                    {`${name} ${percent ? (percent * 100).toFixed(0) : 0}%`}
                   </text>
                 )
               }}
@@ -63,7 +63,7 @@ export function TrafficSources() {
               itemStyle={{
                 color: "hsl(var(--primary))",
               }}
-              formatter={(value: number) => [`${value}%`, "Pourcentage"]}
+              formatter={(value: number | undefined) => value ? [`${value}%`, "Pourcentage"] : ["0%", "Pourcentage"]}
             />
             <Legend
               verticalAlign="bottom"

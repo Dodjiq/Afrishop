@@ -828,9 +828,9 @@ export function SectionsLibrary({ shopConfig, setShopConfig }: SectionsLibraryPr
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Category Filters */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 pb-2 border-b">
         {categories.map((category) => {
           const Icon = category.icon
           return (
@@ -848,8 +848,9 @@ export function SectionsLibrary({ shopConfig, setShopConfig }: SectionsLibraryPr
         })}
       </div>
 
-      {/* Templates Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Templates Grid avec scroll */}
+      <div className="max-h-[600px] overflow-y-auto pr-2 pb-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredTemplates.map((template) => (
           <Card
             key={template.id}
@@ -912,6 +913,7 @@ export function SectionsLibrary({ shopConfig, setShopConfig }: SectionsLibraryPr
             </CardContent>
           </Card>
         ))}
+        </div>
       </div>
 
       {/* Selected Sections */}

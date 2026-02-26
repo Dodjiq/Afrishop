@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 
@@ -14,47 +15,82 @@ const fontPairs = [
     name: "Moderne",
     heading: "Inter",
     body: "Inter",
-    preview: "font-sans",
+    headingWeight: "700",
+    bodyWeight: "400",
+    googleFonts: "Inter:wght@400;700",
   },
   {
     id: "elegant",
     name: "Élégant",
     heading: "Playfair Display",
     body: "Lato",
-    preview: "font-serif",
+    headingWeight: "700",
+    bodyWeight: "400",
+    googleFonts: "Playfair+Display:wght@700&family=Lato:wght@400",
   },
   {
     id: "bold",
     name: "Audacieux",
     heading: "Montserrat",
     body: "Open Sans",
-    preview: "font-sans font-bold",
+    headingWeight: "800",
+    bodyWeight: "400",
+    googleFonts: "Montserrat:wght@800&family=Open+Sans:wght@400",
   },
   {
     id: "minimal",
     name: "Minimaliste",
     heading: "Helvetica",
     body: "Arial",
-    preview: "font-sans",
+    headingWeight: "700",
+    bodyWeight: "400",
+    googleFonts: "", // Polices système
   },
   {
     id: "creative",
     name: "Créatif",
     heading: "Poppins",
     body: "Nunito",
-    preview: "font-sans",
+    headingWeight: "700",
+    bodyWeight: "400",
+    googleFonts: "Poppins:wght@700&family=Nunito:wght@400",
   },
   {
     id: "classic",
     name: "Classique",
     heading: "Georgia",
     body: "Times New Roman",
-    preview: "font-serif",
+    headingWeight: "700",
+    bodyWeight: "400",
+    googleFonts: "", // Polices système
   },
 ]
 
+// Charger les polices Google Fonts dynamiquement
+function loadGoogleFonts(fonts: string) {
+  if (!fonts) return
+
+  const existingLink = document.querySelector(`link[href*="${fonts}"]`)
+  if (existingLink) return
+
+  const link = document.createElement("link")
+  link.rel = "stylesheet"
+  link.href = `https://fonts.googleapis.com/css2?family=${fonts}&display=swap`
+  document.head.appendChild(link)
+}
+
 export function FontCustomizer({ shopConfig, setShopConfig }: FontCustomizerProps) {
   const selectedFont = shopConfig.fontPair || "modern"
+  const selectedFontData = fontPairs.find((f) => f.id === selectedFont) || fontPairs[0]
+
+  // Charger les polices Google Fonts au montage du composant
+  useEffect(() => {
+    fontPairs.forEach((font) => {
+      if (font.googleFonts) {
+        loadGoogleFonts(font.googleFonts)
+      }
+    })
+  }, [])
 
   return (
     <div className="space-y-6">
@@ -73,7 +109,14 @@ export function FontCustomizer({ shopConfig, setShopConfig }: FontCustomizerProp
             <button
               key={font.id}
               onClick={() =>
-                setShopConfig({ ...shopConfig, fontPair: font.id })
+                setShopConfig({
+                  ...shopConfig,
+                  fontPair: font.id,
+                  fonts: {
+                    heading: font.heading,
+                    body: font.body,
+                  }
+                })
               }
               className={cn(
                 "text-left p-6 rounded-lg transition-all hover:scale-[1.02] border-2",
@@ -101,9 +144,24 @@ export function FontCustomizer({ shopConfig, setShopConfig }: FontCustomizerProp
                     </div>
                   )}
                 </div>
-                <div className={font.preview}>
-                  <p className="text-2xl font-bold mb-1">Titre Principal</p>
-                  <p className="text-sm text-muted-foreground">
+                {/* Aperçu avec vraies polices */}
+                <div>
+                  <p
+                    className="text-2xl font-bold mb-1"
+                    style={{
+                      fontFamily: `'${font.heading}', sans-serif`,
+                      fontWeight: font.headingWeight
+                    }}
+                  >
+                    Titre Principal
+                  </p>
+                  <p
+                    className="text-sm text-muted-foreground"
+                    style={{
+                      fontFamily: `'${font.body}', sans-serif`,
+                      fontWeight: font.bodyWeight
+                    }}
+                  >
                     Texte de corps pour la description du produit
                   </p>
                 </div>
@@ -121,21 +179,37 @@ export function FontCustomizer({ shopConfig, setShopConfig }: FontCustomizerProp
         })}
       </div>
 
-      {/* Preview */}
+      {/* Preview avec vraies polices */}
       <Card className="bg-gradient-to-br from-muted/50 to-muted">
         <CardContent className="pt-6">
           <p className="text-sm font-medium mb-4">Aperçu complet :</p>
           <div className="space-y-4">
-            <h1 className="text-3xl font-bold">
+            <h1
+              className="text-3xl font-bold"
+              style={{
+                fontFamily: `'${selectedFontData.heading}', sans-serif`,
+                fontWeight: selectedFontData.headingWeight
+              }}
+            >
               Votre Produit Incroyable
             </h1>
-            <p className="text-muted-foreground">
+            <p
+              className="text-muted-foreground"
+              style={{
+                fontFamily: `'${selectedFontData.body}', sans-serif`,
+                fontWeight: selectedFontData.bodyWeight
+              }}
+            >
               Découvrez notre produit révolutionnaire qui va changer votre vie.
               Qualité premium garantie avec livraison rapide partout en Afrique.
             </p>
             <button
               className="px-6 py-3 rounded-lg font-semibold text-white"
-              style={{ backgroundColor: shopConfig.brandColor }}
+              style={{
+                backgroundColor: shopConfig.brandColor,
+                fontFamily: `'${selectedFontData.body}', sans-serif`,
+                fontWeight: "600"
+              }}
             >
               Acheter Maintenant
             </button>
