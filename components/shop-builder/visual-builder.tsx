@@ -633,27 +633,28 @@ export function VisualBuilder({
           )}
 
           {/* Center - Canvas */}
-          <div className="flex-1 bg-muted/30 overflow-auto p-8">
-            <div
-              className={`bg-background shadow-2xl transition-all duration-300 min-h-full ${
-                deviceMode === "desktop" ? "" : "mx-auto"
-              }`}
-              style={{
-                width: deviceMode === "desktop" ? "100%" : canvasWidths[deviceMode],
-                minWidth: deviceMode === "desktop" ? "1440px" : undefined
-              }}
-            >
-              <BuilderCanvas
-                sections={sections}
-                selectedSection={selectedSection}
-                brandColor={shopConfig.brandColor || "#ea580c"}
-                deviceMode={deviceMode}
-                onSelectSection={setSelectedSection}
-                onUpdateSection={handleUpdateSection}
-                onDeleteSection={handleDeleteSection}
-                onDuplicateSection={handleDuplicateSection}
-                onReorderSections={handleSectionsUpdate}
-              />
+          <div className="flex-1 bg-muted/30 overflow-x-auto overflow-y-auto">
+            <div className="p-8 min-w-max">
+              <div
+                className={`bg-background shadow-2xl transition-all duration-300 min-h-full ${
+                  deviceMode === "desktop" ? "w-full" : "mx-auto"
+                }`}
+                style={{
+                  width: deviceMode === "desktop" ? "1280px" : canvasWidths[deviceMode]
+                }}
+              >
+                <BuilderCanvas
+                  sections={sections}
+                  selectedSection={selectedSection}
+                  brandColor={shopConfig.brandColor || "#ea580c"}
+                  deviceMode={deviceMode}
+                  onSelectSection={setSelectedSection}
+                  onUpdateSection={handleUpdateSection}
+                  onDeleteSection={handleDeleteSection}
+                  onDuplicateSection={handleDuplicateSection}
+                  onReorderSections={handleSectionsUpdate}
+                />
+              </div>
             </div>
           </div>
 
