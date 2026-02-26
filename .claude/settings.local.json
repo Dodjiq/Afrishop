@@ -53,7 +53,8 @@
       "Bash(npx tsx:*)",
       "Bash(cmd /c \"taskkill /F /PID 5620\")",
       "Bash(del .nextdevlock)",
-      "Bash(cmd /c \"del .next\\dev\\lock\")"
+      "Bash(cmd /c \"del .next\\dev\\lock\")",
+      "Bash(cmd /c \"taskkill /F /PID 25760\")"
     ],
     "deny": [],
     "ask": []

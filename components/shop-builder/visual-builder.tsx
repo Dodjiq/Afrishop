@@ -636,9 +636,12 @@ export function VisualBuilder({
           <div className="flex-1 bg-muted/30 overflow-auto p-8">
             <div
               className={`bg-background shadow-2xl transition-all duration-300 min-h-full ${
-                deviceMode === "desktop" ? "w-full" : "mx-auto"
+                deviceMode === "desktop" ? "" : "mx-auto"
               }`}
-              style={{ width: deviceMode === "desktop" ? "100%" : canvasWidths[deviceMode] }}
+              style={{
+                width: deviceMode === "desktop" ? "100%" : canvasWidths[deviceMode],
+                minWidth: deviceMode === "desktop" ? "1440px" : undefined
+              }}
             >
               <BuilderCanvas
                 sections={sections}
