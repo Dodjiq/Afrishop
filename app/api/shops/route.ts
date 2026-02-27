@@ -1,50 +1,72 @@
 import { NextRequest, NextResponse } from "next/server"
-
-// Type definitions
-export interface Shop {
-  id: string
-  userId?: string
-  name: string
-  productData: {
-    name: string
-    description: string
-    price: number
-    images?: string[]
-    features?: string[]
-  }
-  shopConfig: {
-    brandColor: string
-    brandTone: string
-    fontPair?: string
-    sections: any[]
-  }
-  createdAt: string
-  updatedAt: string
-  status: "draft" | "published" | "archived"
-  url?: string
-}
-
-// In-memory storage (remplacer par une vraie DB plus tard)
-let shops: Shop[] = []
+import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
-    const userId = searchParams.get("userId")
+    const supabase = await createClient()
 
-    // Filtrer par userId si fourni
-    const filteredShops = userId
-      ? shops.filter((shop) => shop.userId === userId)
-      : shops
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser()
 
-    return NextResponse.json({
-      shops: filteredShops,
-      total: filteredShops.length,
-    })
-  } catch (error) {
-    console.error("Error fetching shops:", error)
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: "Non authentifié" },
+        { status: 401 }
+      )
+    }
+
+    const { searchParams } = new URL(request.url)
+    const shopId = searchParams.get("id")
+    const status = searchParams.get("status")
+
+    if (shopId) {
+      // Récupérer une boutique spécifique
+      const { data: shop, error } = await supabase
+        .from("shops")
+        .select("*")
+        .eq("id", shopId)
+        .eq("user_id", user.id)
+        .single()
+
+      if (error) {
+        return NextResponse.json(
+          { error: "Boutique non trouvée" },
+          { status: 404 }
+        )
+      }
+
+      return NextResponse.json({ shop })
+    } else {
+      // Récupérer toutes les boutiques de l'utilisateur
+      let query = supabase
+        .from("shops")
+        .select("*")
+        .eq("user_id", user.id)
+
+      if (status) {
+        query = query.eq("status", status)
+      }
+
+      const { data: shops, error } = await query.order("updated_at", { ascending: false })
+
+      if (error) {
+        return NextResponse.json(
+          { error: "Erreur lors de la récupération" },
+          { status: 500 }
+        )
+      }
+
+      return NextResponse.json({
+        shops,
+        total: shops?.length || 0,
+      })
+    }
+  } catch (error: any) {
+    console.error("Get shops error:", error)
     return NextResponse.json(
-      { error: "Failed to fetch shops" },
+      { error: "Erreur serveur", details: error.message },
       { status: 500 }
     )
   }
@@ -52,49 +74,67 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    const supabase = await createClient()
+
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: "Non authentifié" },
+        { status: 401 }
+      )
+    }
+
     const body = await request.json()
-    const { name, productData, shopConfig, userId } = body
+    const { name, productData, shopConfig, sections, status } = body
 
     // Validation
-    if (!name || !productData || !shopConfig) {
+    if (!shopConfig) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Configuration requise" },
         { status: 400 }
       )
     }
 
-    // Créer un nouvel ID unique
-    const shopId = `shop_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    // Créer la boutique
+    const { data: shop, error: insertError } = await supabase
+      .from("shops")
+      .insert({
+        user_id: user.id,
+        name: name || productData?.name || "Nouvelle boutique",
+        config: shopConfig,
+        product_data: productData,
+        sections: sections || shopConfig.sections || [],
+        status: status || "draft",
+        version: 1,
+      })
+      .select()
+      .single()
 
-    // Générer l'URL de la boutique
-    const shopUrl = `${shopConfig.shopName || name}`.toLowerCase().replace(/\s+/g, "-")
-
-    const newShop: Shop = {
-      id: shopId,
-      userId: userId || "anonymous",
-      name,
-      productData,
-      shopConfig,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      status: "published",
-      url: `https://${shopUrl}.afrishop.com`,
+    if (insertError) {
+      console.error("Insert error:", insertError)
+      return NextResponse.json(
+        { error: "Erreur lors de la création", details: insertError.message },
+        { status: 500 }
+      )
     }
-
-    shops.push(newShop)
 
     return NextResponse.json(
       {
         success: true,
-        shop: newShop,
+        shop,
+        shopId: shop.id,
         message: "Boutique créée avec succès",
       },
       { status: 201 }
     )
-  } catch (error) {
-    console.error("Error creating shop:", error)
+  } catch (error: any) {
+    console.error("Create shop error:", error)
     return NextResponse.json(
-      { error: "Failed to create shop" },
+      { error: "Erreur serveur", details: error.message },
       { status: 500 }
     )
   }
@@ -102,33 +142,56 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
+    const supabase = await createClient()
+
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: "Non authentifié" },
+        { status: 401 }
+      )
+    }
+
     const body = await request.json()
     const { id, ...updates } = body
 
     if (!id) {
-      return NextResponse.json({ error: "Shop ID required" }, { status: 400 })
+      return NextResponse.json({ error: "Shop ID requis" }, { status: 400 })
     }
 
-    const shopIndex = shops.findIndex((shop) => shop.id === id)
+    // Mettre à jour la boutique
+    const { data: shop, error: updateError } = await supabase
+      .from("shops")
+      .update({
+        ...updates,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", id)
+      .eq("user_id", user.id)
+      .select()
+      .single()
 
-    if (shopIndex === -1) {
-      return NextResponse.json({ error: "Shop not found" }, { status: 404 })
-    }
-
-    shops[shopIndex] = {
-      ...shops[shopIndex],
-      ...updates,
-      updatedAt: new Date().toISOString(),
+    if (updateError) {
+      console.error("Update error:", updateError)
+      return NextResponse.json(
+        { error: "Erreur lors de la mise à jour", details: updateError.message },
+        { status: 500 }
+      )
     }
 
     return NextResponse.json({
       success: true,
-      shop: shops[shopIndex],
+      shop,
+      message: "Boutique mise à jour avec succès",
     })
-  } catch (error) {
-    console.error("Error updating shop:", error)
+  } catch (error: any) {
+    console.error("Update shop error:", error)
     return NextResponse.json(
-      { error: "Failed to update shop" },
+      { error: "Erreur serveur", details: error.message },
       { status: 500 }
     )
   }
@@ -136,29 +199,50 @@ export async function PATCH(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
+    const supabase = await createClient()
+
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: "Non authentifié" },
+        { status: 401 }
+      )
+    }
+
+    const { searchParams } = new URL(request.url)
     const id = searchParams.get("id")
 
     if (!id) {
-      return NextResponse.json({ error: "Shop ID required" }, { status: 400 })
+      return NextResponse.json({ error: "Shop ID requis" }, { status: 400 })
     }
 
-    const shopIndex = shops.findIndex((shop) => shop.id === id)
+    // Supprimer la boutique
+    const { error: deleteError } = await supabase
+      .from("shops")
+      .delete()
+      .eq("id", id)
+      .eq("user_id", user.id)
 
-    if (shopIndex === -1) {
-      return NextResponse.json({ error: "Shop not found" }, { status: 404 })
+    if (deleteError) {
+      console.error("Delete error:", deleteError)
+      return NextResponse.json(
+        { error: "Erreur lors de la suppression", details: deleteError.message },
+        { status: 500 }
+      )
     }
-
-    shops.splice(shopIndex, 1)
 
     return NextResponse.json({
       success: true,
-      message: "Shop deleted successfully",
+      message: "Boutique supprimée avec succès",
     })
-  } catch (error) {
-    console.error("Error deleting shop:", error)
+  } catch (error: any) {
+    console.error("Delete shop error:", error)
     return NextResponse.json(
-      { error: "Failed to delete shop" },
+      { error: "Erreur serveur", details: error.message },
       { status: 500 }
     )
   }

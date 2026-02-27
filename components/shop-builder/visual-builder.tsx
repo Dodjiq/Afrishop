@@ -36,6 +36,7 @@ import { WidgetsLibraryPanel } from "./widgets-library-panel"
 import { PropertiesPanel } from "./properties-panel"
 import { BuilderCanvas } from "./builder-canvas"
 import { VersionHistory } from "./version-history"
+import { LivePreviewDialog } from "./live-preview-dialog"
 import { useHistory } from "@/hooks/use-history"
 import { useKeyboardShortcuts, BUILDER_SHORTCUTS } from "@/hooks/use-keyboard-shortcuts"
 import { useAutoSave } from "@/hooks/use-auto-save"
@@ -72,6 +73,7 @@ export function VisualBuilder({
   const [showDashboardSidebar, setShowDashboardSidebar] = useState(true)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showVersionHistory, setShowVersionHistory] = useState(false)
+  const [showLivePreview, setShowLivePreview] = useState(false)
 
   // Pages management
   const [pages, setPages] = useState<any[]>([])
@@ -581,16 +583,7 @@ export function VisualBuilder({
               variant="outline"
               size="sm"
               className="gap-2"
-              onClick={() => {
-                // Encoder les données de la boutique pour la preview
-                const previewConfig = {
-                  ...shopConfig,
-                  sections: sections
-                }
-                const encodedConfig = btoa(encodeURIComponent(JSON.stringify(previewConfig)))
-                // Ouvrir dans un nouvel onglet
-                window.open(`/preview/full?config=${encodedConfig}`, '_blank')
-              }}
+              onClick={() => setShowLivePreview(true)}
             >
               <EyeIcon size={18} weight="bold" />
               Prévisualiser
@@ -710,6 +703,15 @@ export function VisualBuilder({
           }}
         />
       )}
+
+      {/* Live Preview Dialog */}
+      <LivePreviewDialog
+        open={showLivePreview}
+        onOpenChange={setShowLivePreview}
+        sections={sections}
+        shopConfig={shopConfig}
+        productData={productData}
+      />
     </DndContext>
   )
 }
